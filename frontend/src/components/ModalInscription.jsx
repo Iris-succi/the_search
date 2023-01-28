@@ -41,8 +41,8 @@ export default function ModalInscription({
                     <input
                       type="text"
                       onChange={(e) => setFirstname(e.target.value)}
-                      name="text"
-                      id="text"
+                      name="firstname"
+                      id="firstname"
                       className=" border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                       placeholder="pseudo@exemple.com"
                       required=""
@@ -55,8 +55,8 @@ export default function ModalInscription({
                     <input
                       type="text"
                       onChange={(e) => setLastname(e.target.value)}
-                      name="text"
-                      id="text"
+                      name="lastname"
+                      id="lastname"
                       className=" border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                       placeholder="pseudo@exemple.com"
                       required=""
