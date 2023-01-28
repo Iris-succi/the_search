@@ -1,36 +1,30 @@
-import Counter from "../components/Counter";
-import logo from "../assets/logo.svg";
+import React from "react";
+import Logo from "../assets/logo-wave.png";
+import Wave from "../assets/bg_wave.jpeg";
+import TheSearchWhite from "../assets/the_search_white.png";
 
 export default function Home() {
   return (
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <p>Hello Vite + React !</p>
-
-      <Counter />
-
-      <p>
-        Edit <code>App.jsx</code> and save to test HMR updates.
-      </p>
-      <p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div className="w-screen flex justify-center ">
+      <img src={Wave} alt="Wave" className="w-screen h-screen" />
+      <img src={Logo} alt="Logo" className="absolute top-0 left-2 w-24" />
+      <img
+        src={TheSearchWhite}
+        alt="title"
+        className="absolute bottom-12 w-auto "
+      />
+      <button type="button" className="absolute bottom-4">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          className="w-6 h-6 "
+          color="white"
         >
-          Learn React
-        </a>
-        {" | "}
-        <a
-          className="App-link"
-          href="https://vitejs.dev/guide/features.html"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Vite Docs
-        </a>
-      </p>
-    </header>
+          <path d="M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5" />
+        </svg>
+      </button>
+    </div>
   );
 }
