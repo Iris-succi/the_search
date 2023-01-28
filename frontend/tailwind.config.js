@@ -3,8 +3,13 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      backgroundImage: {
-        wave: "url('/src/assets/bg_wave.jpeg')",
+      colors: {
+        "grey-b": "#D8D8D8",
+        "light-blue": "#00989E",
+        "dark-blue": "#164C77",
+      },
+      fontFamily: {
+        oxygen: ["Oxygen", "sans-serif"],
       },
     },
   },

@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
+import HomePage from "./pages/HomePage";
 import "./App.css";
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
     <div className="overflow-hidden">
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/home" element={<HomePage />} />
       </Routes>
     </div>
   );
