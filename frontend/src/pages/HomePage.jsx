@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import Logo from "../assets/logo-wave.png";
 import Waves from "../assets/waves.png";
 import Wave from "../assets/wave.svg";
+import ModalConnexion from "../components/ModalConnexion";
+import ModalInscription from "../components/ModalInscription";
 
 export default function HomePage() {
+  const [showModalConnexion, setShowModalConnexion] = useState(false);
+  const [showModalInscription, setShowModalInscription] = useState(false);
+
   return (
     <div className="w-screen">
       <div className="border-b">
@@ -20,9 +25,21 @@ export default function HomePage() {
         <img src={Waves} alt="Waves" className="pt-10 w-44" />
       </div>
       <div className="flex items-center justify-center pt-20">
-        <button type="button">Connexion | </button>
-        <button type="button">| Inscription</button>
+        <button type="button" onClick={() => setShowModalConnexion(true)}>
+          Connexion |{" "}
+        </button>
+        <button type="button" onClick={() => setShowModalInscription(true)}>
+          | Inscription
+        </button>
       </div>
+      <ModalConnexion
+        showModalConnexion={showModalConnexion}
+        setShowModalConnexion={setShowModalConnexion}
+      />
+      <ModalInscription
+        showModalInscription={showModalInscription}
+        setShowModalInscription={setShowModalInscription}
+      />
       <img src={Wave} alt="header bottom" className="absolute bottom-0" />
     </div>
   );
