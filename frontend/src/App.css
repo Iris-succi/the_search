@@ -7,3 +7,10 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
+
+.leaflet-container {
+  margin: 0 auto ;
+  width: 90vw; 
+  height: 40vh;
+  z-index: 10;
+}
