@@ -63,7 +63,7 @@ export default function LeafletControlGeocoder() {
     );
 
     // Set the default layer when you open the map
-    baselayers["jawg-streets"].addTo(map);
+    baselayers["jawg-terrain"].addTo(map);
     // Associating each style name to its tile layer
     L.control.layers(baselayers).addTo(map);
   }, []);

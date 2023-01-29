@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import SpotPage from "./pages/SpotPage";
 import MyProfile from "./pages/MyProfile";
 import SearchPage from "./pages/SearchPage";
+import MyMapVisited from "./pages/MyMapVisited";
 import "./App.css";
 
 function App() {
@@ -25,6 +26,10 @@ function App() {
         <Route
           path="/myprofile"
           element={<MyProfile open={open} setOpen={setOpen} />}
+        />
+        <Route
+          path="/myspots"
+          element={<MyMapVisited open={open} setOpen={setOpen} />}
         />
       </Routes>
     </div>
