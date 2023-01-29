@@ -3,6 +3,7 @@ import { useState } from "react";
 import Home from "./pages/Home";
 import HomePage from "./pages/HomePage";
 import SpotPage from "./pages/SpotPage";
+import MyProfile from "./pages/MyProfile";
 import SearchPage from "./pages/SearchPage";
 import "./App.css";
 
@@ -20,6 +21,10 @@ function App() {
         <Route
           path="/spot"
           element={<SpotPage open={open} setOpen={setOpen} />}
+        />
+        <Route
+          path="/myprofile"
+          element={<MyProfile open={open} setOpen={setOpen} />}
         />
       </Routes>
     </div>
