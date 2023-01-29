@@ -19,9 +19,7 @@ function App() {
         />
         <Route
           path="/spot"
-          open={open}
-          setOpen={setOpen}
-          element={<SpotPage />}
+          element={<SpotPage open={open} setOpen={setOpen} />}
         />
       </Routes>
     </div>
