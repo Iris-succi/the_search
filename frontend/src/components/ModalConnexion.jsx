@@ -2,6 +2,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCurrentUserContext } from "../context/userContext";
 
 export default function ModalConnexion({
   showModalConnexion,
@@ -9,6 +11,36 @@ export default function ModalConnexion({
 }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { setUser } = useCurrentUserContext();
+
+  const handleConnexion = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      email,
+      password,
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:5000/api/login", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.token) {
+          setUser(result.user);
+          localStorage.setItem("token", result.token);
+        }
+        navigate("/thesearch");
+      })
+      .catch((error) => console.warn(error));
+  };
 
   return (
     <div>
@@ -65,7 +97,10 @@ export default function ModalConnexion({
                   <button
                     className="border rounded-md mr-4 text-light-blue hover:border-light-blue background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModalConnexion(false)}
+                    onClick={() => {
+                      setShowModalConnexion(false);
+                      handleConnexion();
+                    }}
                   >
                     Connexion
                   </button>

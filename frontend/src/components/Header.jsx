@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Logo from "../assets/logo-wave.png";
 import Menu from "../assets/Menu.png";
@@ -7,8 +7,11 @@ import Activity from "../assets/icons/activity.svg";
 import Anchor from "../assets/icons/anchor.svg";
 import Map from "../assets/icons/map.svg";
 import Battery from "../assets/icons/battery.svg";
+import ModalDeconnexion from "./ModalDeconnexion";
 
 export default function Header({ open, setOpen }) {
+  const [showModalDeconnexion, setShowModalDeconnexion] = useState(false);
+
   return (
     <div className="w-screen z-50">
       <div className="border-b flex items-center justify-between">
@@ -51,9 +54,17 @@ export default function Header({ open, setOpen }) {
                   alt="icon surf"
                   className="w-8 h-8 white mr-5"
                 />
-                <NavLink to="/" className="text-white text-2xl">
+                <button
+                  type="button"
+                  className="text-white text-2xl"
+                  onClick={() => setShowModalDeconnexion(true)}
+                >
                   Déconnecter
-                </NavLink>
+                </button>
+                <ModalDeconnexion
+                  showModalDeconnexion={showModalDeconnexion}
+                  setShowModalDeconnexion={setShowModalDeconnexion}
+                />
               </div>
             </div>
           </div>

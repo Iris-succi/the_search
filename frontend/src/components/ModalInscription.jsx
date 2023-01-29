@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ModalInscription({
   showModalInscription,
@@ -11,6 +12,33 @@ export default function ModalInscription({
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleInscription = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      firstname,
+      lastname,
+      email,
+      password,
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:5000/api/user/inscription", requestOptions)
+      .then((response) => response.json())
+      .then(() => {
+        navigate("/home");
+      })
+      .catch((error) => console.warn(error));
+  };
 
   return (
     <div>
@@ -95,7 +123,10 @@ export default function ModalInscription({
                   <button
                     className="border rounded-md mr-4 text-light-blue hover:border-light-blue background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModalInscription(false)}
+                    onClick={() => {
+                      setShowModalInscription(false);
+                      handleInscription();
+                    }}
                   >
                     Inscription
                   </button>
