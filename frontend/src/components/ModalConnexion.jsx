@@ -3,6 +3,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCurrentUserContext } from "../context/userContext";
 
 export default function ModalConnexion({
   showModalConnexion,
@@ -11,6 +12,7 @@ export default function ModalConnexion({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { setUser } = useCurrentUserContext();
 
   const handleConnexion = () => {
     const myHeaders = new Headers();
@@ -30,8 +32,11 @@ export default function ModalConnexion({
 
     fetch("http://localhost:5000/api/login", requestOptions)
       .then((response) => response.json())
-      .then((data) => {
-        console.warn(data);
+      .then((result) => {
+        if (result.token) {
+          setUser(result.user);
+          localStorage.setItem("token", result.token);
+        }
         navigate("/thesearch");
       })
       .catch((error) => console.warn(error));
