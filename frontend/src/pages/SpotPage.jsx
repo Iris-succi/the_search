@@ -7,6 +7,7 @@ import Uluwatu from "../assets/1805114574.png";
 import Meteo from "../assets/meteo.png";
 import Flash from "../assets/icons/flash.svg";
 import Video from "../assets/icons/video.svg";
+/* import MapSpot from "../components/MapSpot"; */
 
 export default function SpotPage({ open, setOpen }) {
   return (
@@ -34,7 +35,7 @@ export default function SpotPage({ open, setOpen }) {
       <hr className="w-80 m-auto" />
       <div className="w-10/12 m-auto ">
         <div className="flex justify-between">
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col w-full h-full">
             <div className="col-start-1 row-start-1 text-xl pt-5">
               Commentaires sur ce spot :
             </div>
@@ -42,12 +43,23 @@ export default function SpotPage({ open, setOpen }) {
               <Comment />
               <Comment />
             </div>
+            <div className="w-80">
+              <button
+                type="button"
+                className="flex border-2 border-light-blue rounded-md text-white bg-light-blue p-2  mt-5  items-center"
+              >
+                Ajoute ton commentaire
+              </button>
+            </div>
           </div>
           <div className="flex flex-col w-1/3">
-            <div className="border-2 border-gray-200 mt-10 rounded-md flex flex-col p-4 h-40 w-80">
+            <div className="border-2 border-gray-200 mt-5 rounded-md flex flex-col p-2 h-32 w-80">
               Météo du jour :
               <img src={Meteo} alt="météo" className="w-80" />
             </div>
+            {/*             <div className="border-2 border-gray-200 mt-5 rounded-md flex flex-col p-2 h-32 w-80">
+              <MapSpot />
+            </div> */}
             <div className="text-xl pt-5 flex justify-around ">
               <div className="flex items-center ">
                 <button
