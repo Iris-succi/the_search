@@ -14,6 +14,6 @@ router.post(
 );
 
 // Route for user
-router.post("/api/user", hashPassword, userController.add);
+router.post("/api/user/inscription", hashPassword, userController.add);
 
 module.exports = router;
