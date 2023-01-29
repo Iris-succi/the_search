@@ -33,34 +33,38 @@ export default function SpotPage({ open, setOpen }) {
       </div>
       <hr className="w-80 m-auto" />
       <div className="w-10/12 m-auto ">
-        <div className="grid grid-cols-3 grid-rows-6">
-          <div className="col-start-1 row-start-1 text-xl pt-5">
-            Commentaires sur ce spot :
-          </div>
-          <div className="col-start-1 row-start-1 row-end-2 col-end-3 h-2/5 w-10/12">
-            <Comment />
-            <Comment />
-          </div>
-          <div className="border-2 border-gray-200 mt-10 rounded-md flex flex-col col-start-3 p-4 h-40">
-            Météo du jour :
-            <img src={Meteo} alt="météo" className="w-80" />
-          </div>
-          <div className="col-start-3 row-start-2 text-xl pt-5 flex justify-around ">
-            <div className="flex items-center ">
-              <button
-                type="button"
-                className="flex border-2 border-light-blue rounded-md text-white bg-light-blue p-2 w-34 h-10 items-center"
-              >
-                Prévisions <img src={Flash} alt="flash" className="pl-2" />
-              </button>
+        <div className="flex justify-between">
+          <div className="flex flex-col w-full">
+            <div className="col-start-1 row-start-1 text-xl pt-5">
+              Commentaires sur ce spot :
             </div>
-            <div className="flex items-center justify-center ">
-              <button
-                type="button"
-                className="flex border-2 border-light-blue rounded-md text-white bg-light-blue p-2 w-34 h-10 items-center"
-              >
-                Webcam <img src={Video} alt="video" className="pl-2" />
-              </button>
+            <div className=" h-2/5 w-10/12">
+              <Comment />
+              <Comment />
+            </div>
+          </div>
+          <div className="flex flex-col w-1/3">
+            <div className="border-2 border-gray-200 mt-10 rounded-md flex flex-col p-4 h-40 w-80">
+              Météo du jour :
+              <img src={Meteo} alt="météo" className="w-80" />
+            </div>
+            <div className="text-xl pt-5 flex justify-around ">
+              <div className="flex items-center ">
+                <button
+                  type="button"
+                  className="flex border-2 border-light-blue rounded-md text-white bg-light-blue p-2 w-34 h-10 items-center"
+                >
+                  Prévisions <img src={Flash} alt="flash" className="pl-2" />
+                </button>
+              </div>
+              <div className="flex items-center justify-center ">
+                <button
+                  type="button"
+                  className="flex border-2 border-light-blue rounded-md text-white bg-light-blue p-2 w-34 h-10 items-center"
+                >
+                  Webcam <img src={Video} alt="video" className="pl-2" />
+                </button>
+              </div>
             </div>
           </div>
         </div>

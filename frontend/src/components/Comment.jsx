@@ -5,7 +5,7 @@ import Avatar from "../assets/iris.png";
 export default function Comment() {
   return (
     <div>
-      <div className="relative border-2 border-gray-200 mt-20 rounded-md flex flex-col p-4">
+      <div className="relative border-2 border-gray-200 mt-5 rounded-md flex flex-col p-4">
         <div className="flex">
           <img src={Avatar} alt="avatar" className="w-10 h-10" />
           <div className="flex flex-col text-gray-400 ml-10">
