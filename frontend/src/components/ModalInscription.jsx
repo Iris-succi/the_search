@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
+import { toast, Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 export default function ModalInscription({
@@ -32,7 +33,14 @@ export default function ModalInscription({
       redirect: "follow",
     };
 
-    fetch("http://localhost:5000/api/user/inscription", requestOptions)
+    toast
+      .promise(
+        fetch("http://localhost:5000/api/user/inscription", requestOptions),
+        {
+          success: "Votre inscription a bien été prise en compte",
+          error: "Une erreur est survenue",
+        }
+      )
       .then((response) => response.json())
       .then(() => {
         navigate("/home");
@@ -42,6 +50,7 @@ export default function ModalInscription({
 
   return (
     <div>
+      <Toaster position="top-center" reverseOrder={false} />
       {showModalInscription ? (
         <div>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
