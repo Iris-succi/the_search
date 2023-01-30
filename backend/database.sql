@@ -36,14 +36,14 @@ DROP TABLE IF EXISTS comment;
 CREATE TABLE comment (
   id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   comment TEXT NOT NULL,
-  id_user int,
-  id_spot int,
+  user_id int,
+  spot_id int,
   date_creation DATETIME NOT NULL DEFAULT NOW(),
-  FOREIGN KEY (id_user) REFERENCES user(id),
-  FOREIGN KEY (id_spot) REFERENCES spot(id)
+  FOREIGN KEY (user_id) REFERENCES user(id),
+  FOREIGN KEY (spot_id) REFERENCES spot(id)
 );
 
-INSERT INTO comment (id_user, id_spot, comment, date_creation) VALUES (1, 1, 'Super spot belle gauche !', '2019-01-01 00:00:00'),(1, 2, 'Super spot meme si j ai cassé ma board !', '2019-01-01 00:00:00'),(1, 3, 'Super spot attention rocher!', '2019-01-01 00:00:00'),(1, 4, 'Parfait', '2019-01-01 00:00:00'),(1, 5, 'Meilleur spot', '2019-01-01 00:00:00'),(1, 6, 'Parfait pour les débutant', '2019-01-01 00:00:00'),(2, 1, 'Trop beau spot', '2019-01-01 00:00:00'),(2, 2, 'Super spot !', '2019-01-01 00:00:00'),(2, 3, 'Super spot !', '2019-01-01 00:00:00'),(2, 4, 'Vague qui deferle longtemps', '2019-01-01 00:00:00'),(2, 5, 'Attention au rocher', '2019-01-01 00:00:00'),(2, 6, 'Super spot !', '2019-01-01 00:00:00');
+INSERT INTO comment (user_id, spot_id, comment, date_creation) VALUES (1, 1, 'Super spot belle gauche !', '2019-01-01 00:00:00'),(1, 2, 'Super spot meme si j ai cassé ma board !', '2019-01-01 00:00:00'),(1, 3, 'Super spot attention rocher!', '2019-01-01 00:00:00'),(1, 4, 'Parfait', '2019-01-01 00:00:00'),(1, 5, 'Meilleur spot', '2019-01-01 00:00:00'),(1, 6, 'Parfait pour les débutant', '2019-01-01 00:00:00'),(2, 1, 'Trop beau spot', '2019-01-01 00:00:00'),(2, 2, 'Super spot !', '2019-01-01 00:00:00'),(2, 3, 'Super spot !', '2019-01-01 00:00:00'),(2, 4, 'Vague qui deferle longtemps', '2019-01-01 00:00:00'),(2, 5, 'Attention au rocher', '2019-01-01 00:00:00'),(2, 6, 'Super spot !', '2019-01-01 00:00:00');
 
 DROP TABLE IF EXISTS favorite;
 

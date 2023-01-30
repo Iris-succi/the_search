@@ -14,6 +14,7 @@ import Video from "../assets/icons/video.svg";
 export default function SpotPage({ open, setOpen }) {
   const [showModalAddComment, setShowModalAddComment] = useState(false);
   const { token } = useCurrentUserContext();
+  const [spot, setSpot] = useState([]);
 
   const { id } = useParams();
 
@@ -29,25 +30,31 @@ export default function SpotPage({ open, setOpen }) {
 
     fetch(`http://localhost:5000/api/spots/${id}`, requestOptions)
       .then((response) => response.json())
-      .then((data) => console.warn(data))
+      .then((data) => {
+        console.warn(data);
+        setSpot(data[0]);
+      })
       .catch((error) => console.warn(error));
   }, [token]);
 
+  console.warn(spot);
   return (
     <div className="w-screen md:h-screen">
       <Header open={open} setOpen={setOpen} />
       <div className="w-11/12 m-auto">
         <div className="md:grid grid-cols-2 grid-rows-2 w-11/12 m-auto h-[300px] ">
           <div className="flex flex-col items-center mt-10">
-            <h2 className="text-center text-3xl">Spot : Uluwatu - Bali</h2>
+            <h2 className="text-center text-3xl">
+              Spot : {spot?.name} - {spot?.country}
+            </h2>
             <img src={Waves} alt="Waves" className="pt-5 w-44 " />
           </div>
           <div className="flex justify-between pt-10">
             <div className="pl-10 text-sm md:text-lg">
-              Type de spot : <span className="font-bold">Reef</span>
+              Type de spot : <span className="font-bold">{spot?.type}</span>
             </div>
-            <div className="pr-10 text-sm ">
-              Niveau : <span className="font-bold">Avancé</span>
+            <div className="pr-10 text-sm md:text-lg">
+              Niveau : <span className="font-bold">{spot?.level}</span>
             </div>
           </div>
           <div className="w-auto pt-5 col-start-2 row-end-2 m-auto">
