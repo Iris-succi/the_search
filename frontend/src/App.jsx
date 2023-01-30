@@ -20,7 +20,7 @@ function App() {
           element={<SearchPage open={open} setOpen={setOpen} />}
         />
         <Route
-          path="/spot"
+          path="/spots/:id"
           element={<SpotPage open={open} setOpen={setOpen} />}
         />
         <Route

@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useCurrentUserContext } from "../context/userContext";
 import Comment from "../components/Comment";
 import ModalAddComment from "../components/ModalAddComment";
 import Header from "../components/Header";
@@ -8,10 +10,28 @@ import Uluwatu from "../assets/1805114574.png";
 import Meteo from "../assets/meteo.png";
 import Flash from "../assets/icons/flash.svg";
 import Video from "../assets/icons/video.svg";
-/* import MapSpot from "../components/MapSpot"; */
 
 export default function SpotPage({ open, setOpen }) {
   const [showModalAddComment, setShowModalAddComment] = useState(false);
+  const { token } = useCurrentUserContext();
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(`http://localhost:5000/api/spots/${id}`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => console.warn(data))
+      .catch((error) => console.warn(error));
+  }, [token]);
 
   return (
     <div className="w-screen md:h-screen">

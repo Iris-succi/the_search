@@ -12,19 +12,12 @@ class FavoriteManager extends AbstractManager {
     );
   }
 
-  getFavorites(id) {
-    return this.connection.query(
-      `select * from ${this.table} where user_id = ?`,
-      [id]
-    );
-  }
-
-  getFavoritesBySpotId(id) {
+  getFavorites(idUser) {
     return this.connection.query(
       `select * from ${this.table} 
       join spot on ${this.table}.spot_id = spot.id
-      where spot_id = ?`,
-      [id]
+      where user_id = ?`,
+      [idUser]
     );
   }
 }

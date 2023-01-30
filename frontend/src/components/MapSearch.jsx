@@ -1,10 +1,13 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { useNavigate } from "react-router-dom";
 import LeafletControlGeocoder from "./LeafletControlGeocoder";
 
 export default function MapSearch({ spots }) {
   const position = [51.505, -0.09];
+  const navigate = useNavigate();
+
   return (
     <div className="leaflet-container z-20">
       <MapContainer center={position} zoom={2} scrollWheelZoom={false}>
@@ -17,8 +20,12 @@ export default function MapSearch({ spots }) {
           return (
             <Marker key={spot.id} position={[spot.latitude, spot.longitude]}>
               <Popup>
-                <h2>{spot.name}</h2>
-                <p>{spot.country}</p>
+                <button
+                  type="button"
+                  onClick={() => navigate(`/spots/${spot.id}`)}
+                >
+                  {spot.name} {spot.country}
+                </button>
               </Popup>
             </Marker>
           );

@@ -35,7 +35,7 @@ export default function ModalInscription({
 
     toast
       .promise(
-        fetch("http://localhost:5000/api/user/inscription", requestOptions),
+        fetch("http://localhost:5000/api/users/inscription", requestOptions),
         {
           success: "Votre inscription a bien été prise en compte",
           error: "Une erreur est survenue",

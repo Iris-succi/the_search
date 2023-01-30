@@ -1,23 +1,10 @@
-/* eslint-disable array-callback-return */
 const models = require("../models");
 
 const getFavorites = (req, res) => {
   models.favorite
-    .getFavorites(req.params.id)
+    .getFavorites(req.payload.sub)
     .then(([rows]) => {
-      const favorite = [rows];
-      rows.map((row) => {
-        models.spot
-          .find(row.spot_id)
-          .then(([spot]) => {
-            console.warn(spot);
-            favorite.spot = spot;
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      });
-      res.send(favorite);
+      res.send(rows);
     })
     .catch((err) => {
       console.error(err);

@@ -25,7 +25,7 @@ export default function MyProfile({ open, setOpen }) {
       redirect: "follow",
     };
 
-    fetch(`http://localhost:5000/api/user/${user.id}`, requestOptions)
+    fetch(`http://localhost:5000/api/users/${user.id}`, requestOptions)
       .then((response) => response.json())
       .then((result) => console.warn(result))
       .catch((error) => console.warn("error", error));
@@ -41,11 +41,11 @@ export default function MyProfile({ open, setOpen }) {
       redirect: "follow",
     };
 
-    fetch(`http://localhost:5000/api/user/${user.id}/favorites`, requestOptions)
+    fetch(`http://localhost:5000/api/favorites`, requestOptions)
       .then((response) => response.json())
       .then((result) => setFavorites(result))
       .catch((error) => console.warn("error", error));
-  }, []);
+  }, [token]);
 
   console.warn(favorites);
 
@@ -94,9 +94,12 @@ export default function MyProfile({ open, setOpen }) {
           <img src={Heart} alt="coeur" className="ml-5" />
         </div>
       </div>
-      <div className="w-8/12 m-auto flex md:flex-row flex-col items-center justify-around mt-10">
-        <FavoriteSpotCard />
-        <FavoriteSpotCard />
+      <div className="w-8/12 m-auto flex flex-col items-center justify-center mt-10 md:grid grid-cols-2 place-items-center">
+        {favorites?.map((favorite) => (
+          <button type="button" key={favorite.id}>
+            <FavoriteSpotCard favorite={favorite} />
+          </button>
+        ))}
       </div>
     </div>
   );
