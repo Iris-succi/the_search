@@ -11,7 +11,7 @@ CREATE TABLE user (
   date_creation DATETIME NOT NULL DEFAULT NOW() 
 );
 
-INSERT INTO user (firstname, lastname, email, city, avatar, hashedPassword, date_creation) VALUES ('Iris', 'Succi', 'iris@gmail.com', 'Cannes', 'iris.jpg', '12345!', '2019-01-01 00:00:00'),('Madeline', 'Thomas', 'madeline@gmail.com', 'Los Angeles', 'madeline.jpg', '12345!','2019-01-01 00:00:00');
+INSERT INTO user (firstname, lastname, email, city, avatar, hashedPassword, date_creation) VALUES ('Iris', 'Succi', 'iris@gmail.com', 'Cannes', 'iris.jpg', '$argon2id$v=19$m=65536,t=5,p=1$cHKCeWcTAbFAoQip2FBoSQ$YEwzjtbjy/r88czZmo+Ess3AGPYvhonN2HTureWf3NY', '2019-01-01 00:00:00'),('Madeline', 'Thomas', 'madeline@gmail.com', 'Los Angeles', 'madeline.jpg', '$argon2id$v=19$m=65536,t=5,p=1$cHKCeWcTAbFAoQip2FBoSQ$YEwzjtbjy/r88czZmo+Ess3AGPYvhonN2HTureWf3NY','2019-01-01 00:00:00');
 
 DROP TABLE IF EXISTS spot;
 
@@ -49,20 +49,19 @@ DROP TABLE IF EXISTS favorite;
 
 CREATE TABLE favorite (
   id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  id_user int,
-  id_spot int,
-  date_creation DATETIME NOT NULL DEFAULT NOW(),
-  FOREIGN KEY (id_user) REFERENCES user(id),
-  FOREIGN KEY (id_spot) REFERENCES spot(id)
+  user_id int,
+  spot_id int,
+  FOREIGN KEY (user_id) REFERENCES user(id),
+  FOREIGN KEY (spot_id) REFERENCES spot(id)
 );
+
+INSERT INTO favorite (user_id, spot_id) VALUES (1, 1),(1, 2),(1, 3),(1, 4),(1, 5),(1, 6),(2, 1),(2, 3),(2, 4),(2, 6);
 
 DROP TABLE IF EXISTS spot_visited;
 
 CREATE TABLE spot_visited (
-  id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  id_user int,
-  id_spot int,
-  date_creation DATETIME NOT NULL DEFAULT NOW(),
-  FOREIGN KEY (id_user) REFERENCES user(id),
-  FOREIGN KEY (id_spot) REFERENCES spot(id)
+  user_id int,
+  spot_id int,
+  FOREIGN KEY (user_id) REFERENCES user(id),
+  FOREIGN KEY (spot_id) REFERENCES spot(id)
 );
