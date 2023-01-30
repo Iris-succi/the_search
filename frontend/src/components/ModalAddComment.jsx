@@ -2,7 +2,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
-import Star from "../assets/icons/star.svg";
+import { useParams } from "react-router-dom";
+import { useCurrentUserContext } from "../context/userContext";
 
 export default function ModalAddComment({
   showModalAddComment,
@@ -14,6 +15,36 @@ export default function ModalAddComment({
   const [like3, setLike3] = useState(false);
   const [like4, setLike4] = useState(false);
   const [like5, setLike5] = useState(false);
+  const { user } = useCurrentUserContext();
+  const { id } = useParams();
+
+  const handleComment = () => {
+    const myHeaders = new Headers();
+    myHeaders.append(
+      "Authorization",
+      "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTY3NTA4MDA0NywiZXhwIjoxNjc1MTIzMjQ3fQ.fcEwIx0lUeLnCDf_-40njBWxVuXV3ft8iqV3uXXtGFKz5dspcB8gsR0v5PDFEiwimjZIIQwkWswHFodkTAfwJw"
+    );
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      comment,
+      note: "4",
+      user_id: user.id,
+      spot_id: id,
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(`http://localhost:5000/api/spots/3/comment`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => console.warn(result))
+      .catch((error) => console.warn("error", error));
+  };
 
   return (
     <div>
@@ -140,7 +171,10 @@ export default function ModalAddComment({
                   <button
                     className="border rounded-md mr-4 text-light-blue hover:border-light-blue background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModalAddComment(false)}
+                    onClick={() => {
+                      setShowModalAddComment(false);
+                      handleComment();
+                    }}
                   >
                     Envoyer
                   </button>

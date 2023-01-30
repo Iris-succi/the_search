@@ -4,6 +4,7 @@ const router = express.Router();
 
 const userController = require("./controllers/userController");
 const authController = require("./controllers/authController");
+const commentController = require("./controllers/commentController");
 const favoriteController = require("./controllers/favoriteController");
 const spotController = require("./controllers/spotController");
 const {
@@ -31,5 +32,12 @@ router.get("/api/favorites", verifyToken, favoriteController.getFavorites);
 // Route for spot
 router.get("/api/spots", verifyToken, spotController.browse);
 router.get("/api/spots/:id", verifyToken, spotController.read);
+
+// Route for comment
+router.post(
+  "/api/spots/:id/comment",
+  verifyToken,
+  commentController.addComment
+);
 
 module.exports = router;

@@ -13,6 +13,13 @@ class CommentManager extends AbstractManager {
       [spotId]
     );
   }
+
+  insertComment(comment) {
+    return this.connection.query(
+      `INSERT into ${this.table} (comment, note, user_id, spot_id) values ( ?, ?, ?, ?)`,
+      [comment.comment, comment.note, comment.user_id, comment.spot_id]
+    );
+  }
 }
 
 module.exports = CommentManager;
