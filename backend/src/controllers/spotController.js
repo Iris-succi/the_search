@@ -24,7 +24,6 @@ const read = (req, res) => {
       models.comment
         .getCommentsBySpotId(req.params.id)
         .then(([comment]) => {
-          console.warn(comment);
           spot.comments = comment;
           res.send(spot);
         })

@@ -14,7 +14,7 @@ import Video from "../assets/icons/video.svg";
 export default function SpotPage({ open, setOpen }) {
   const [showModalAddComment, setShowModalAddComment] = useState(false);
   const { token } = useCurrentUserContext();
-  const [spot, setSpot] = useState([]);
+  const [spotWithComment, setSpotWithComment] = useState([]);
 
   const { id } = useParams();
 
@@ -31,13 +31,11 @@ export default function SpotPage({ open, setOpen }) {
     fetch(`http://localhost:5000/api/spots/${id}`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.warn(data);
-        setSpot(data[0]);
+        setSpotWithComment(data);
       })
       .catch((error) => console.warn(error));
   }, [token]);
 
-  console.warn(spot);
   return (
     <div className="w-screen md:h-screen">
       <Header open={open} setOpen={setOpen} />
@@ -45,16 +43,18 @@ export default function SpotPage({ open, setOpen }) {
         <div className="md:grid grid-cols-2 grid-rows-2 w-11/12 m-auto h-[300px] ">
           <div className="flex flex-col items-center mt-10">
             <h2 className="text-center text-3xl">
-              Spot : {spot?.name} - {spot?.country}
+              Spot : {spotWithComment?.name} - {spotWithComment?.country}
             </h2>
             <img src={Waves} alt="Waves" className="pt-5 w-44 " />
           </div>
           <div className="flex justify-between pt-10">
             <div className="pl-10 text-sm md:text-lg">
-              Type de spot : <span className="font-bold">{spot?.type}</span>
+              Type de spot :{" "}
+              <span className="font-bold">{spotWithComment?.type}</span>
             </div>
             <div className="pr-10 text-sm md:text-lg">
-              Niveau : <span className="font-bold">{spot?.level}</span>
+              Niveau :{" "}
+              <span className="font-bold">{spotWithComment?.level}</span>
             </div>
           </div>
           <div className="w-auto pt-5 col-start-2 row-end-2 m-auto">
@@ -67,10 +67,11 @@ export default function SpotPage({ open, setOpen }) {
         <div className="flex md:justify-between flex-col-reverse items-center md:flex-row md:mt-5 mt-40">
           <div className="flex flex-col w-full h-full">
             <div className="text-xl pt-5">Commentaires sur ce spot :</div>
-            <div className=" h-2/5 md:w-10/12 w-full">
-              <Comment />
-              <Comment />
-            </div>
+            {spotWithComment?.comments?.map((comment) => (
+              <div className=" h-2/5 md:w-10/12 w-full" key={comment.id}>
+                <Comment comment={comment} />
+              </div>
+            ))}
             <div className="w-80 mb-5 md:mb-0">
               <button
                 type="button"
