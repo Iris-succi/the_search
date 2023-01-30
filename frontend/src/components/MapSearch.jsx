@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import LeafletControlGeocoder from "./LeafletControlGeocoder";
 
-export default function MapSearch() {
+export default function MapSearch({ spots }) {
   const position = [51.505, -0.09];
   return (
     <div className="leaflet-container z-20">
@@ -12,11 +13,16 @@ export default function MapSearch() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <LeafletControlGeocoder />
-        <Marker position={position}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
+        {spots.map((spot) => {
+          return (
+            <Marker key={spot.id} position={[spot.latitude, spot.longitude]}>
+              <Popup>
+                <h2>{spot.name}</h2>
+                <p>{spot.country}</p>
+              </Popup>
+            </Marker>
+          );
+        })}
       </MapContainer>
     </div>
   );
