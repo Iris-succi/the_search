@@ -23,9 +23,9 @@ const read = (req, res) => {
       const spot = result[0];
       models.comment
         .getCommentsBySpotId(req.params.id)
-        .then(([comments]) => {
-          console.warn(comments);
-          spot[0].comments = comments;
+        .then(([comment]) => {
+          console.warn(comment);
+          spot.comments = comment;
           res.send(spot);
         })
         .catch((err) => {
