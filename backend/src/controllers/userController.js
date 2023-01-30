@@ -1,6 +1,37 @@
 const models = require("../models");
 
-/* function that retrieves data with "post" */
+const browse = (req, res) => {
+  models.user
+    .getById(req.params.id)
+    .then(([rows]) => {
+      if (rows[0] == null) {
+        res.sendStatus(404);
+      } else {
+        res.send(rows[0]);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
+const findByToken = (req, res) => {
+  models.user
+    .getById(req.payload.sub)
+    .then(([rows]) => {
+      if (rows[0] == null) {
+        res.sendStatus(404);
+      } else {
+        res.send(rows[0]);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 const add = (req, res) => {
   const user = req.body;
 
@@ -19,5 +50,7 @@ const add = (req, res) => {
 };
 
 module.exports = {
+  browse,
+  findByToken,
   add,
 };

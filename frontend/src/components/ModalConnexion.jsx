@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
+import { toast, Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useCurrentUserContext } from "../context/userContext";
 
@@ -13,6 +14,7 @@ export default function ModalConnexion({
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { setUser } = useCurrentUserContext();
+  const notify = () => toast.error("Email ou mot de passe incorrect");
 
   const handleConnexion = () => {
     const myHeaders = new Headers();
@@ -36,14 +38,17 @@ export default function ModalConnexion({
         if (result.token) {
           setUser(result.user);
           localStorage.setItem("token", result.token);
+          navigate("/thesearch");
+        } else {
+          notify();
         }
-        navigate("/thesearch");
       })
       .catch((error) => console.warn(error));
   };
 
   return (
     <div>
+      <Toaster position="top-center" reverseOrder={false} />
       {showModalConnexion ? (
         <div>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">

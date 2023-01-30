@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import Teahupoo from "../assets/1805114574.png";
 
-export default function FavoriteSpotCard() {
+export default function FavoriteSpotCard({ favorite }) {
   const [favoriteSpot, setFavoriteSpot] = useState(true);
   return (
-    <div className="w-80 border h-40 rounded-lg">
+    <div className="w-80 border h-40 rounded-lg mb-4">
       <div className="flex flex-col items-center relative">
         <div className="flex items-center justify-center pt-2 ">
           <button type="button" onClick={() => setFavoriteSpot(false)}>
@@ -24,7 +25,9 @@ export default function FavoriteSpotCard() {
             </svg>
           </button>
 
-          <h2 className="text-xl ">Uluwatu - Bali</h2>
+          <h2 className="text-xl ">
+            {favorite.name} - {favorite.country}
+          </h2>
         </div>
         <img src={Teahupoo} alt="spot" className="w-72 h-28 rounded-lg" />
       </div>

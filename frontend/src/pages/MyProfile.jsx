@@ -1,6 +1,8 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
+import { useCurrentUserContext } from "../context/userContext";
 import FavoriteSpotCard from "../components/FavoriteSpotCard";
 import Edit from "../assets/icons/edit.svg";
 import Heart from "../assets/icons/heart.svg";
@@ -9,6 +11,44 @@ import PalmLeft from "../assets/palm_left.png";
 import PalmRight from "../assets/palm_right.png";
 
 export default function MyProfile({ open, setOpen }) {
+  const { user, token } = useCurrentUserContext();
+  const [favorites, setFavorites] = useState();
+  console.warn(user);
+
+  useEffect(() => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(`http://localhost:5000/api/users/${user.id}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => console.warn(result))
+      .catch((error) => console.warn("error", error));
+  }, [token]);
+
+  useEffect(() => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(`http://localhost:5000/api/favorites`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => setFavorites(result))
+      .catch((error) => console.warn("error", error));
+  }, [token]);
+
+  console.warn(favorites);
+
   return (
     <div className="w-screen">
       <Header open={open} setOpen={setOpen} />
@@ -23,18 +63,18 @@ export default function MyProfile({ open, setOpen }) {
           <img src={Avatar} alt="avatar" className="w-32 h-32" />
           <div className="flex md:flex-col flex-row mt-10 md:mt-0">
             <p className="mr-5 md:mr-0">
-              Prénom : <span className="font-bold">Iris</span>
+              Prénom : <span className="font-bold">{user.firstname}</span>
             </p>
             <p className="md:mt-10">
-              Email : <span className="font-bold">iris@gmail.com</span>
+              Email : <span className="font-bold">{user.email}</span>
             </p>
           </div>
           <div className="flex md:flex-col flex-row">
             <p className="mr-5 md:mr-0">
-              Nom : <span className="font-bold">Succi</span>
+              Nom : <span className="font-bold">{user.lastname}</span>
             </p>
             <p className="md:mt-10">
-              Localisation : <span className="font-bold">Cannes</span>
+              Localisation : <span className="font-bold">{user?.location}</span>
             </p>
           </div>
         </div>
@@ -54,9 +94,12 @@ export default function MyProfile({ open, setOpen }) {
           <img src={Heart} alt="coeur" className="ml-5" />
         </div>
       </div>
-      <div className="w-8/12 m-auto flex md:flex-row flex-col items-center justify-around mt-10">
-        <FavoriteSpotCard />
-        <FavoriteSpotCard />
+      <div className="w-8/12 m-auto flex flex-col items-center justify-center mt-10 md:grid grid-cols-2 place-items-center">
+        {favorites?.map((favorite) => (
+          <button type="button" key={favorite.id}>
+            <FavoriteSpotCard favorite={favorite} />
+          </button>
+        ))}
       </div>
     </div>
   );
