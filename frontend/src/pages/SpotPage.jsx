@@ -1,6 +1,7 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useCurrentUserContext } from "../context/userContext";
 import Comment from "../components/Comment";
 import ModalAddComment from "../components/ModalAddComment";
@@ -96,20 +97,24 @@ export default function SpotPage({ open, setOpen }) {
             </div> */}
             <div className="text-xl pt-5 flex justify-around ">
               <div className="flex items-center ">
-                <button
-                  type="button"
-                  className="flex border-2 border-light-blue rounded-md text-white bg-light-blue p-2 w-34 h-10 items-center"
-                >
-                  Prévisions <img src={Flash} alt="flash" className="pl-2" />
-                </button>
+                <Link to={`${spotWithComment?.prevision}`}>
+                  <div
+                    type="button"
+                    className="flex border-2 border-light-blue rounded-md text-white bg-light-blue p-2 w-34 h-10 items-center"
+                  >
+                    Prévisions <img src={Flash} alt="flash" className="pl-2" />
+                  </div>
+                </Link>
               </div>
               <div className="flex items-center justify-center ">
-                <button
-                  type="button"
-                  className="flex border-2 border-light-blue rounded-md text-white bg-light-blue p-2 w-34 h-10 items-center"
-                >
-                  Webcam <img src={Video} alt="video" className="pl-2" />
-                </button>
+                <Link to={`${spotWithComment?.webcam}`}>
+                  <div
+                    type="button"
+                    className="flex border-2 border-light-blue rounded-md text-white bg-light-blue p-2 w-34 h-10 items-center"
+                  >
+                    Webcam <img src={Video} alt="video" className="pl-2" />
+                  </div>
+                </Link>
               </div>
             </div>
           </div>
