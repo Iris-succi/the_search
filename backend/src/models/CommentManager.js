@@ -7,7 +7,9 @@ class CommentManager extends AbstractManager {
 
   getCommentsBySpotId(spotId) {
     return this.connection.query(
-      `select * from ${this.table} where spot_id = ?`,
+      `select * from ${this.table}
+      join user on ${this.table}.user_id = user.id
+      where spot_id = ?`,
       [spotId]
     );
   }
