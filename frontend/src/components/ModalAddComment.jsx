@@ -13,7 +13,7 @@ export default function ModalAddComment({
 }) {
   const [comment, setComment] = useState("");
   const [note, setNote] = useState(0);
-  const { user } = useCurrentUserContext();
+  const { user, token } = useCurrentUserContext();
   const { id } = useParams();
 
   const ratingChanged = (newRating) => {
@@ -22,10 +22,7 @@ export default function ModalAddComment({
 
   const handleComment = () => {
     const myHeaders = new Headers();
-    myHeaders.append(
-      "Authorization",
-      "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTY3NTA4MDA0NywiZXhwIjoxNjc1MTIzMjQ3fQ.fcEwIx0lUeLnCDf_-40njBWxVuXV3ft8iqV3uXXtGFKz5dspcB8gsR0v5PDFEiwimjZIIQwkWswHFodkTAfwJw"
-    );
+    myHeaders.append("Authorization", `Bearer ${token}`);
     myHeaders.append("Content-Type", "application/json");
 
     const raw = JSON.stringify({

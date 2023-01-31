@@ -20,11 +20,39 @@ export default function Comment({ comment }) {
             <p className="text-black">{comment.comment}</p>
           </div>
           <div className="absolute right-5 flex ">
-            <img src={Star} alt="star" className="w-5 h-5" />
-            <img src={Star} alt="star" className="w-5 h-5" />
-            <img src={Star} alt="star" className="w-5 h-5" />
-            <img src={Star} alt="star" className="w-5 h-5" />
-            <img src={Star} alt="star" className="w-5 h-5" />
+            {comment.note === 1 ? (
+              <img src={Star} alt="star" className="w-5 h-5" />
+            ) : null}
+            {comment.note === 2 ? (
+              <>
+                <img src={Star} alt="star" className="w-5 h-5" />
+                <img src={Star} alt="star" className="w-5 h-5" />
+              </>
+            ) : null}
+            {comment.note === 3 ? (
+              <>
+                <img src={Star} alt="star" className="w-5 h-5" />
+                <img src={Star} alt="star" className="w-5 h-5" />
+                <img src={Star} alt="star" className="w-5 h-5" />
+              </>
+            ) : null}
+            {comment.note === 4 ? (
+              <>
+                <img src={Star} alt="star" className="w-5 h-5" />
+                <img src={Star} alt="star" className="w-5 h-5" />
+                <img src={Star} alt="star" className="w-5 h-5" />
+                <img src={Star} alt="star" className="w-5 h-5" />
+              </>
+            ) : null}
+            {comment.note === 5 ? (
+              <>
+                <img src={Star} alt="star" className="w-5 h-5" />
+                <img src={Star} alt="star" className="w-5 h-5" />
+                <img src={Star} alt="star" className="w-5 h-5" />
+                <img src={Star} alt="star" className="w-5 h-5" />
+                <img src={Star} alt="star" className="w-5 h-5" />
+              </>
+            ) : null}
           </div>
         </div>
       </div>
