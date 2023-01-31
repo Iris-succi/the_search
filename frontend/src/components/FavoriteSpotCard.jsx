@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
-import Teahupoo from "../assets/1805114574.png";
 
 export default function FavoriteSpotCard({ favorite }) {
   const [favoriteSpot, setFavoriteSpot] = useState(true);
@@ -18,6 +17,7 @@ export default function FavoriteSpotCard({ favorite }) {
       })
       .catch((error) => console.warn("error", error));
   };
+
   return (
     <div className="w-80 border h-40 rounded-lg mb-4">
       <div className="flex flex-col items-center relative">
@@ -43,7 +43,11 @@ export default function FavoriteSpotCard({ favorite }) {
             {favorite.name} - {favorite.country}
           </h2>
         </div>
-        <img src={Teahupoo} alt="spot" className="w-72 h-28 rounded-lg" />
+        <img
+          src={`http://localhost:3000/src/assets/spots/${favorite.picture}`}
+          alt="spot"
+          className="w-72 h-28 rounded-lg"
+        />
       </div>
     </div>
   );

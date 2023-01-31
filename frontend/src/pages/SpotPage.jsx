@@ -8,7 +8,6 @@ import Comment from "../components/Comment";
 import ModalAddComment from "../components/ModalAddComment";
 import Header from "../components/Header";
 import Waves from "../assets/waves.png";
-import Uluwatu from "../assets/1805114574.png";
 import Flash from "../assets/icons/flash.svg";
 import Video from "../assets/icons/video.svg";
 import Wind from "../assets/weather/wind.png";
@@ -122,7 +121,11 @@ export default function SpotPage({ open, setOpen }) {
             </div>
           </div>
           <div className="w-auto pt-5 col-start-2 row-end-2 m-auto">
-            <img src={Uluwatu} alt="Uluwatu" className="h-[250px] w-[700px]" />
+            <img
+              src={`http://localhost:3000/src/assets/spots/${spotWithComment.picture}`}
+              alt="Uluwatu"
+              className="h-[250px] w-[700px]"
+            />
           </div>
         </div>
       </div>
@@ -164,7 +167,7 @@ export default function SpotPage({ open, setOpen }) {
                   <div className="text-5xl ml-6">
                     {parseInt(weatherData?.temp, 10)}°
                   </div>
-                  <div className="text-sm ml-2">
+                  <div className="text-xs font-thin ml-2 text-center">
                     {" "}
                     ressenti {parseInt(weatherData?.feels_like, 10)}°
                   </div>
