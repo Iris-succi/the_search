@@ -37,7 +37,7 @@ export default function SpotPage({ open, setOpen }) {
         setSpotWithComment(data);
       })
       .catch((error) => console.warn(error));
-  }, [token]);
+  }, [token, showModalAddComment]);
 
   useEffect(() => {
     fetch(
