@@ -13,14 +13,14 @@ export default function Header({ open, setOpen }) {
   const [showModalDeconnexion, setShowModalDeconnexion] = useState(false);
 
   return (
-    <div className="w-screen z-50">
+    <div className="w-screen z-50 ">
       <div className="border-b flex items-center justify-between">
         <img src={Logo} alt="logo" className="w-20 h-20 pl-2" />
         <button type="button" onClick={() => setOpen(!open)}>
           <img src={Menu} alt="menu" className="w-8 h-8 md:mr-10 mr-5" />
         </button>
         {open ? (
-          <div className="absolute top-20 right-0 w-screen md:w-80 h-screen bg-light-blue z-50">
+          <div className="absolute top-20 right-0 w-screen md:w-80 h-screen bg-light-blue z-50 ">
             <div className="flex flex-col items-center mt-10">
               <div className="flex flex-row items-center">
                 <img

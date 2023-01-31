@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { toast, Toaster } from "react-hot-toast";
 import { useCurrentUserContext } from "../context/userContext";
 import Comment from "../components/Comment";
 import ModalAddComment from "../components/ModalAddComment";
@@ -65,8 +66,12 @@ export default function SpotPage({ open, setOpen }) {
       body: raw,
       redirect: "follow",
     };
-
-    fetch(`http://localhost:5000/api/addfavorite`, requestOptions)
+    toast
+      .promise(fetch(`http://localhost:5000/api/addfavorite`, requestOptions), {
+        success: " 🌊 Spot ajouté aux favoris",
+        error:
+          "Une erreur sur le serveur est survenue lors de l'ajout en favoris",
+      })
       .then((response) => response.json())
       .then((result) => {
         console.warn(result);
@@ -77,6 +82,7 @@ export default function SpotPage({ open, setOpen }) {
 
   return (
     <div className="w-screen md:h-screen">
+      <Toaster position="top-center" reverseOrder={false} />
       <Header open={open} setOpen={setOpen} />
       <div className="w-11/12 m-auto">
         <div className="md:grid grid-cols-2 grid-rows-2 w-11/12 m-auto h-[300px] ">
@@ -91,6 +97,7 @@ export default function SpotPage({ open, setOpen }) {
                   width="24"
                   height="24"
                   viewBox="0 0 24 24"
+                  onClick={setAddFavorite}
                   fill={addFavorite ? "red" : "none"}
                   stroke="black"
                   strokeWidth="1"
@@ -157,7 +164,7 @@ export default function SpotPage({ open, setOpen }) {
                   <div className="text-5xl ml-6">
                     {parseInt(weatherData?.temp, 10)}°
                   </div>
-                  <div className="text-sm ml-4">
+                  <div className="text-sm ml-2">
                     {" "}
                     ressenti {parseInt(weatherData?.feels_like, 10)}°
                   </div>
