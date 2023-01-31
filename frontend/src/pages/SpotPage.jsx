@@ -21,7 +21,7 @@ export default function SpotPage({ open, setOpen }) {
 
   useEffect(() => {
     const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Authorization", `Bearer ${localStorage.token}`);
 
     const requestOptions = {
       method: "GET",
@@ -66,17 +66,19 @@ export default function SpotPage({ open, setOpen }) {
       <hr className="w-80 m-auto " />
       <div className="md:w-10/12 w-11/12 m-auto ">
         <div className="flex md:justify-between flex-col-reverse items-center md:flex-row md:mt-5 mt-40">
-          <div className="flex flex-col w-full h-full">
-            <div className="text-xl pt-5">Commentaires sur ce spot :</div>
-            {spotWithComment?.comments?.map((comment) => (
-              <div className=" h-2/5 md:w-10/12 w-full" key={comment.id}>
-                <Comment comment={comment} />
-              </div>
-            ))}
+          <div className="flex flex-col w-full h-full ">
+            <div className="text-xl pt-5 mb-5">Commentaires sur ce spot :</div>
+            <div className="overflow-y-scroll h-64 mr-10">
+              {spotWithComment?.comments?.map((comment) => (
+                <div className=" h-2/5 md:w-10/12 w-full" key={comment.id}>
+                  <Comment comment={comment} />
+                </div>
+              ))}
+            </div>
             <div className="w-80 mb-5 md:mb-0">
               <button
                 type="button"
-                className="flex border-2 border-light-blue rounded-md text-white bg-light-blue p-2  mt-5  items-center"
+                className="flex border-2 border-light-blue rounded-md text-white bg-light-blue p-2  mt-2  items-center"
                 onClick={() => setShowModalAddComment(true)}
               >
                 Ajoute ton commentaire

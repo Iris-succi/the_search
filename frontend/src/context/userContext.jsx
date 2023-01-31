@@ -25,7 +25,7 @@ export function CurrentUserContextProvider({ children }) {
         setUser(result);
       })
       .catch((error) => console.warn("error", error));
-  }, []);
+  }, [token]);
 
   console.warn(user);
   return (

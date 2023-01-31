@@ -10,7 +10,7 @@ export default function Comment({ comment }) {
 
   return (
     <div>
-      <div className="relative border-2 border-gray-200 mt-5 rounded-md flex flex-col p-4">
+      <div className="relative border-2 border-gray-200 rounded-md flex flex-col p-4">
         <div className="flex">
           <img src={Avatar} alt="avatar" className="w-10 h-10" />
           <div className="flex flex-col text-gray-400 md:ml-10 ml-5">

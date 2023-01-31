@@ -23,8 +23,8 @@ router.post(
 
 // Route for user
 router.post("/api/users/inscription", hashPassword, userController.add);
-router.get("/api/users/:id", userController.browse);
 router.get("/api/users/bytoken", verifyToken, userController.findByToken);
+router.get("/api/users/:id", userController.browse);
 
 // Route for favorite
 router.get("/api/favorites", verifyToken, favoriteController.getFavorites);
