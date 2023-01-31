@@ -18,14 +18,14 @@ export function CurrentUserContextProvider({ children }) {
       headers: myHeader,
     };
 
-    fetch("http://localhost:5000/api/user/bytoken", requestOptions)
+    fetch("http://localhost:5000/api/users/bytoken", requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.warn(result);
         setUser(result);
       })
       .catch((error) => console.warn("error", error));
-  }, []);
+  }, [token]);
 
   console.warn(user);
   return (

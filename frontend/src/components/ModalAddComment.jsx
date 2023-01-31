@@ -2,18 +2,48 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
-import Star from "../assets/icons/star.svg";
+import ReactStars from "react-rating-stars-component";
+import { useParams } from "react-router-dom";
+import { render } from "react-dom";
+import { useCurrentUserContext } from "../context/userContext";
 
 export default function ModalAddComment({
   showModalAddComment,
   setShowModalAddComment,
 }) {
   const [comment, setComment] = useState("");
-  const [like1, setLike1] = useState(false);
-  const [like2, setLike2] = useState(false);
-  const [like3, setLike3] = useState(false);
-  const [like4, setLike4] = useState(false);
-  const [like5, setLike5] = useState(false);
+  const [note, setNote] = useState(0);
+  const { user, token } = useCurrentUserContext();
+  const { id } = useParams();
+
+  const ratingChanged = (newRating) => {
+    setNote(newRating);
+  };
+
+  const handleComment = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      comment,
+      note,
+      user_id: user.id,
+      spot_id: id,
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(`http://localhost:5000/api/spots/3/comment`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => console.warn(result))
+      .catch((error) => console.warn("error", error));
+  };
 
   return (
     <div>
@@ -39,86 +69,12 @@ export default function ModalAddComment({
                 <div className="relative p-6 flex-auto">
                   <div className="pb-4">
                     <div className="absolute right-5 flex ">
-                      <button type="button" onClick={() => setLike1(!like1)}>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill={like1 ? "yellow" : "none"}
-                          stroke="black"
-                          strokeWidth="1"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="feather feather-star"
-                        >
-                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                        </svg>
-                      </button>
-                      <button type="button" onClick={() => setLike2(!like2)}>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill={like2 ? "yellow" : "none"}
-                          stroke="black"
-                          strokeWidth="1"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="feather feather-star"
-                        >
-                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                        </svg>
-                      </button>
-                      <button type="button" onClick={() => setLike3(!like3)}>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill={like3 ? "yellow" : "none"}
-                          stroke="black"
-                          strokeWidth="1"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="feather feather-star"
-                        >
-                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                        </svg>
-                      </button>
-                      <button type="button" onClick={() => setLike4(!like4)}>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill={like4 ? "yellow" : "none"}
-                          stroke="black"
-                          strokeWidth="1"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="feather feather-star"
-                        >
-                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                        </svg>
-                      </button>
-                      <button type="button" onClick={() => setLike5(!like5)}>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill={like5 ? "yellow" : "none"}
-                          stroke="black"
-                          strokeWidth="1"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="feather feather-star"
-                        >
-                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                        </svg>
-                      </button>
+                      <ReactStars
+                        count={5}
+                        onChange={ratingChanged}
+                        size={24}
+                        activeColor="#ffd700"
+                      />
                     </div>
                   </div>
                   <div className="pb-4">
@@ -140,7 +96,10 @@ export default function ModalAddComment({
                   <button
                     className="border rounded-md mr-4 text-light-blue hover:border-light-blue background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModalAddComment(false)}
+                    onClick={() => {
+                      setShowModalAddComment(false);
+                      handleComment();
+                    }}
                   >
                     Envoyer
                   </button>

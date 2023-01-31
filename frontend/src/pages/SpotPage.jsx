@@ -1,6 +1,7 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useCurrentUserContext } from "../context/userContext";
 import Comment from "../components/Comment";
 import ModalAddComment from "../components/ModalAddComment";
@@ -14,12 +15,13 @@ import Video from "../assets/icons/video.svg";
 export default function SpotPage({ open, setOpen }) {
   const [showModalAddComment, setShowModalAddComment] = useState(false);
   const { token } = useCurrentUserContext();
+  const [spotWithComment, setSpotWithComment] = useState([]);
 
   const { id } = useParams();
 
   useEffect(() => {
     const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Authorization", `Bearer ${localStorage.token}`);
 
     const requestOptions = {
       method: "GET",
@@ -29,7 +31,9 @@ export default function SpotPage({ open, setOpen }) {
 
     fetch(`http://localhost:5000/api/spots/${id}`, requestOptions)
       .then((response) => response.json())
-      .then((data) => console.warn(data))
+      .then((data) => {
+        setSpotWithComment(data);
+      })
       .catch((error) => console.warn(error));
   }, [token]);
 
@@ -39,15 +43,19 @@ export default function SpotPage({ open, setOpen }) {
       <div className="w-11/12 m-auto">
         <div className="md:grid grid-cols-2 grid-rows-2 w-11/12 m-auto h-[300px] ">
           <div className="flex flex-col items-center mt-10">
-            <h2 className="text-center text-3xl">Spot : Uluwatu - Bali</h2>
+            <h2 className="text-center text-3xl">
+              Spot : {spotWithComment?.name} - {spotWithComment?.country}
+            </h2>
             <img src={Waves} alt="Waves" className="pt-5 w-44 " />
           </div>
           <div className="flex justify-between pt-10">
             <div className="pl-10 text-sm md:text-lg">
-              Type de spot : <span className="font-bold">Reef</span>
+              Type de spot :{" "}
+              <span className="font-bold">{spotWithComment?.type}</span>
             </div>
-            <div className="pr-10 text-sm ">
-              Niveau : <span className="font-bold">Avancé</span>
+            <div className="pr-10 text-sm md:text-lg">
+              Niveau :{" "}
+              <span className="font-bold">{spotWithComment?.level}</span>
             </div>
           </div>
           <div className="w-auto pt-5 col-start-2 row-end-2 m-auto">
@@ -58,16 +66,19 @@ export default function SpotPage({ open, setOpen }) {
       <hr className="w-80 m-auto " />
       <div className="md:w-10/12 w-11/12 m-auto ">
         <div className="flex md:justify-between flex-col-reverse items-center md:flex-row md:mt-5 mt-40">
-          <div className="flex flex-col w-full h-full">
-            <div className="text-xl pt-5">Commentaires sur ce spot :</div>
-            <div className=" h-2/5 md:w-10/12 w-full">
-              <Comment />
-              <Comment />
+          <div className="flex flex-col w-full h-full ">
+            <div className="text-xl pt-5 mb-5">Commentaires sur ce spot :</div>
+            <div className="overflow-y-scroll h-64 mr-10">
+              {spotWithComment?.comments?.map((comment) => (
+                <div className=" h-2/5 md:w-10/12 w-full" key={comment.id}>
+                  <Comment comment={comment} />
+                </div>
+              ))}
             </div>
             <div className="w-80 mb-5 md:mb-0">
               <button
                 type="button"
-                className="flex border-2 border-light-blue rounded-md text-white bg-light-blue p-2  mt-5  items-center"
+                className="flex border-2 border-light-blue rounded-md text-white bg-light-blue p-2  mt-2  items-center"
                 onClick={() => setShowModalAddComment(true)}
               >
                 Ajoute ton commentaire
@@ -88,20 +99,24 @@ export default function SpotPage({ open, setOpen }) {
             </div> */}
             <div className="text-xl pt-5 flex justify-around ">
               <div className="flex items-center ">
-                <button
-                  type="button"
-                  className="flex border-2 border-light-blue rounded-md text-white bg-light-blue p-2 w-34 h-10 items-center"
-                >
-                  Prévisions <img src={Flash} alt="flash" className="pl-2" />
-                </button>
+                <Link to={`${spotWithComment?.prevision}`}>
+                  <div
+                    type="button"
+                    className="flex border-2 border-light-blue rounded-md text-white bg-light-blue p-2 w-34 h-10 items-center"
+                  >
+                    Prévisions <img src={Flash} alt="flash" className="pl-2" />
+                  </div>
+                </Link>
               </div>
               <div className="flex items-center justify-center ">
-                <button
-                  type="button"
-                  className="flex border-2 border-light-blue rounded-md text-white bg-light-blue p-2 w-34 h-10 items-center"
-                >
-                  Webcam <img src={Video} alt="video" className="pl-2" />
-                </button>
+                <Link to={`${spotWithComment?.webcam}`}>
+                  <div
+                    type="button"
+                    className="flex border-2 border-light-blue rounded-md text-white bg-light-blue p-2 w-34 h-10 items-center"
+                  >
+                    Webcam <img src={Video} alt="video" className="pl-2" />
+                  </div>
+                </Link>
               </div>
             </div>
           </div>

@@ -15,8 +15,22 @@ const browse = (req, res) => {
 const read = (req, res) => {
   models.spot
     .find(req.params.id)
-    .then(([rows]) => {
-      res.send(rows);
+    .then(([result]) => {
+      if (!result[0]) {
+        res.sendStatus(404);
+        return;
+      }
+      const spot = result[0];
+      models.comment
+        .getCommentsBySpotId(req.params.id)
+        .then(([comment]) => {
+          spot.comments = comment;
+          res.send(spot);
+        })
+        .catch((err) => {
+          console.error(err);
+          res.sendStatus(500);
+        });
     })
     .catch((err) => {
       console.error(err);
