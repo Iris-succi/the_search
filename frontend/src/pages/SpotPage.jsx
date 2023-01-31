@@ -8,7 +8,6 @@ import ModalAddComment from "../components/ModalAddComment";
 import Header from "../components/Header";
 import Waves from "../assets/waves.png";
 import Uluwatu from "../assets/1805114574.png";
-import Meteo from "../assets/meteo.png";
 import Flash from "../assets/icons/flash.svg";
 import Video from "../assets/icons/video.svg";
 
@@ -16,7 +15,7 @@ export default function SpotPage({ open, setOpen }) {
   const [showModalAddComment, setShowModalAddComment] = useState(false);
   const { token } = useCurrentUserContext();
   const [spotWithComment, setSpotWithComment] = useState([]);
-
+  const [weatherData, setWeatherData] = useState();
   const { id } = useParams();
 
   useEffect(() => {
@@ -37,6 +36,18 @@ export default function SpotPage({ open, setOpen }) {
       .catch((error) => console.warn(error));
   }, [token]);
 
+  useEffect(() => {
+    fetch(
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${spotWithComment?.latitude}&lon=${spotWithComment?.longitude}&lang=fr&exclude={part}&appid=256faf36b0c507b30e5832b662f35446`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setWeatherData(data.current);
+      })
+      .catch((error) => console.warn(error));
+  }, [spotWithComment]);
+
+  console.warn(weatherData);
   return (
     <div className="w-screen md:h-screen">
       <Header open={open} setOpen={setOpen} />
@@ -92,8 +103,14 @@ export default function SpotPage({ open, setOpen }) {
           <div className="flex flex-col md:w-1/3">
             <div className="border-2 border-gray-200 mt-5 rounded-md flex flex-col p-2 h-32 w-80">
               Météo du jour :
-              <img src={Meteo} alt="météo" className="w-80" />
+              <div className="flex w-16 h-16 m-2">
+                <img
+                  src={`http://localhost:3000/src/assets/weather/${weatherData?.weather[0]?.main}.png`}
+                  alt="weather"
+                />
+              </div>
             </div>
+
             {/*             <div className="border-2 border-gray-200 mt-5 rounded-md flex flex-col p-2 h-32 w-80">
               <MapSpot />
             </div> */}
