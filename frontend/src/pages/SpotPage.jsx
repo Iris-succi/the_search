@@ -10,6 +10,7 @@ import Waves from "../assets/waves.png";
 import Uluwatu from "../assets/1805114574.png";
 import Flash from "../assets/icons/flash.svg";
 import Video from "../assets/icons/video.svg";
+import Wind from "../assets/weather/wind.png";
 
 export default function SpotPage({ open, setOpen }) {
   const [showModalAddComment, setShowModalAddComment] = useState(false);
@@ -38,7 +39,7 @@ export default function SpotPage({ open, setOpen }) {
 
   useEffect(() => {
     fetch(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${spotWithComment?.latitude}&lon=${spotWithComment?.longitude}&lang=fr&exclude={part}&appid=256faf36b0c507b30e5832b662f35446`
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${spotWithComment?.latitude}&lon=${spotWithComment?.longitude}&units=metric&lang=fr&exclude={part}&appid=256faf36b0c507b30e5832b662f35446`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -79,7 +80,7 @@ export default function SpotPage({ open, setOpen }) {
         <div className="flex md:justify-between flex-col-reverse items-center md:flex-row md:mt-5 mt-40">
           <div className="flex flex-col w-full h-full ">
             <div className="text-xl pt-5 mb-5">Commentaires sur ce spot :</div>
-            <div className="overflow-y-scroll h-64 mr-10">
+            <div className="overflow-y-scroll h-64 md:mr-10">
               {spotWithComment?.comments?.map((comment) => (
                 <div className=" h-2/5 md:w-10/12 w-full" key={comment.id}>
                   <Comment comment={comment} />
@@ -108,6 +109,23 @@ export default function SpotPage({ open, setOpen }) {
                   src={`http://localhost:3000/src/assets/weather/${weatherData?.weather[0]?.main}.png`}
                   alt="weather"
                 />
+                <div className="flex flex-col">
+                  <div className="text-5xl ml-6">
+                    {parseInt(weatherData?.temp, 10)}°
+                  </div>
+                  <div className="text-sm ml-4">
+                    {" "}
+                    ressenti {parseInt(weatherData?.feels_like, 10)}°
+                  </div>
+                </div>
+
+                <img src={Wind} alt="wind" className="w-16 h-16 ml-6" />
+                <div className="flex items-end ml-2">
+                  <p className="font-bold text-xl">
+                    {parseInt(weatherData?.wind_speed, 10)}{" "}
+                    <span className="font-thin text-sm">km/h</span>
+                  </p>
+                </div>
               </div>
             </div>
 
