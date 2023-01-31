@@ -7,11 +7,13 @@ import { useNavigate } from "react-router-dom";
 export default function ModalDeconnexion({
   showModalDeconnexion,
   setShowModalDeconnexion,
+  setOpen,
 }) {
   const navigate = useNavigate();
   const handleDeconnexion = () => {
     localStorage.removeItem("token");
     navigate("/");
+    setOpen(false);
   };
 
   return (

@@ -64,6 +64,7 @@ export default function Header({ open, setOpen }) {
                 <ModalDeconnexion
                   showModalDeconnexion={showModalDeconnexion}
                   setShowModalDeconnexion={setShowModalDeconnexion}
+                  setOpen={setOpen}
                 />
               </div>
             </div>

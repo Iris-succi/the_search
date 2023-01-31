@@ -23,7 +23,22 @@ const deleteFavorite = (req, res) => {
       res.sendStatus(500);
     });
 };
+
+const addFavorite = (req, res) => {
+  const favorite = req.body;
+  models.favorite
+    .insert(favorite)
+    .then(() => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   getFavorites,
   deleteFavorite,
+  addFavorite,
 };

@@ -29,6 +29,7 @@ router.get("/api/users/:id", userController.browse);
 
 // Route for favorite
 router.get("/api/favorites", verifyToken, favoriteController.getFavorites);
+router.post("/api/addfavorite", verifyToken, favoriteController.addFavorite);
 router.delete(
   "/api/favorites/:id",
   verifyToken,

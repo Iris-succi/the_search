@@ -14,9 +14,10 @@ import Wind from "../assets/weather/wind.png";
 
 export default function SpotPage({ open, setOpen }) {
   const [showModalAddComment, setShowModalAddComment] = useState(false);
-  const { token } = useCurrentUserContext();
+  const { user, token } = useCurrentUserContext();
   const [spotWithComment, setSpotWithComment] = useState([]);
   const [weatherData, setWeatherData] = useState();
+  const [addFavorite, setAddFavorite] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -48,16 +49,59 @@ export default function SpotPage({ open, setOpen }) {
       .catch((error) => console.warn(error));
   }, [spotWithComment]);
 
-  console.warn(weatherData);
+  const handleAddFavorite = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      user_id: user.id,
+      spot_id: id,
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(`http://localhost:5000/api/addfavorite`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.warn(result);
+        setAddFavorite(true);
+      })
+      .catch((error) => console.warn("error", error));
+  };
+
   return (
     <div className="w-screen md:h-screen">
       <Header open={open} setOpen={setOpen} />
       <div className="w-11/12 m-auto">
         <div className="md:grid grid-cols-2 grid-rows-2 w-11/12 m-auto h-[300px] ">
           <div className="flex flex-col items-center mt-10">
-            <h2 className="text-center text-3xl">
-              Spot : {spotWithComment?.name} - {spotWithComment?.country}
-            </h2>
+            <div className="flex ">
+              <h2 className="text-center text-3xl">
+                Spot : {spotWithComment?.name} - {spotWithComment?.country}
+              </h2>
+              <button type="button" onClick={handleAddFavorite}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill={addFavorite ? "red" : "none"}
+                  stroke="black"
+                  strokeWidth="1"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="ml-5"
+                >
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                </svg>
+              </button>
+            </div>
             <img src={Waves} alt="Waves" className="pt-5 w-44 " />
           </div>
           <div className="flex justify-between pt-10">

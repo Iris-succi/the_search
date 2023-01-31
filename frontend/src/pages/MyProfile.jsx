@@ -49,11 +49,11 @@ export default function MyProfile({ open, setOpen }) {
   }, [token]);
 
   return (
-    <div className="w-screen">
+    <div className="w-screen md:h-screen">
       <Header open={open} setOpen={setOpen} />
       <div className="flex">
         <h2 className="text-3xl mt-5 ml-20">Mon profil :</h2>
-        <NavLink to="/modify-profile" type="button" className="mt-5 ml-5">
+        <NavLink to="/modify-profile" type="button" className="mt-7 ml-5">
           <img src={Edit} alt="pen" />
         </NavLink>
       </div>
@@ -94,7 +94,7 @@ export default function MyProfile({ open, setOpen }) {
           <img src={Heart} alt="coeur" className="ml-5" />
         </div>
       </div>
-      <div className="w-8/12 m-auto flex flex-col items-center justify-center mt-10 md:grid grid-cols-2 place-items-center">
+      <div className="w-8/12 m-auto flex flex-col items-center justify-center mt-10 md:grid grid-cols-2 place-items-center md:h-80 md:overflow-y-auto">
         {favorites?.map((favorite) => (
           <button type="button" key={favorite.id}>
             <FavoriteSpotCard favorite={favorite} />
