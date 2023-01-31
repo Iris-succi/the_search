@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import SpotPage from "./pages/SpotPage";
 import MyProfile from "./pages/MyProfile";
 import SearchPage from "./pages/SearchPage";
+import ModifyProfile from "./pages/ModifyProfile";
 import MyMapVisited from "./pages/MyMapVisited";
 import "./App.css";
 
@@ -26,6 +27,10 @@ function App() {
         <Route
           path="/myprofile"
           element={<MyProfile open={open} setOpen={setOpen} />}
+        />
+        <Route
+          path="/modify-profile"
+          element={<ModifyProfile open={open} setOpen={setOpen} />}
         />
         <Route
           path="/myspots"

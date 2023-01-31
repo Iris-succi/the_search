@@ -5,13 +5,13 @@ CREATE TABLE user (
   firstname varchar(100) NOT NULL,
   lastname varchar(100) NOT NULL,
   email varchar(200) NOT NULL,
-  city varchar(100),
+  localisation varchar(100),
   avatar varchar(255),
   hashedPassword varchar(100) NOT NULL,
   date_creation DATETIME NOT NULL DEFAULT NOW() 
 );
 
-INSERT INTO user (firstname, lastname, email, city, avatar, hashedPassword, date_creation) VALUES ('Iris', 'Succi', 'iris@gmail.com', 'Cannes', 'iris.jpg', '$argon2id$v=19$m=65536,t=5,p=1$cHKCeWcTAbFAoQip2FBoSQ$YEwzjtbjy/r88czZmo+Ess3AGPYvhonN2HTureWf3NY', '2019-01-01 00:00:00'),('Madeline', 'Thomas', 'madeline@gmail.com', 'Los Angeles', 'madeline.jpg', '$argon2id$v=19$m=65536,t=5,p=1$cHKCeWcTAbFAoQip2FBoSQ$YEwzjtbjy/r88czZmo+Ess3AGPYvhonN2HTureWf3NY','2019-01-01 00:00:00');
+INSERT INTO user (firstname, lastname, email, localisation, avatar, hashedPassword, date_creation) VALUES ('Iris', 'Succi', 'iris@gmail.com', 'Cannes', 'iris.jpg', '$argon2id$v=19$m=65536,t=5,p=1$cHKCeWcTAbFAoQip2FBoSQ$YEwzjtbjy/r88czZmo+Ess3AGPYvhonN2HTureWf3NY', '2019-01-01 00:00:00'),('Madeline', 'Thomas', 'madeline@gmail.com', 'Los Angeles', 'madeline.jpg', '$argon2id$v=19$m=65536,t=5,p=1$cHKCeWcTAbFAoQip2FBoSQ$YEwzjtbjy/r88czZmo+Ess3AGPYvhonN2HTureWf3NY','2019-01-01 00:00:00');
 
 DROP TABLE IF EXISTS spot;
 

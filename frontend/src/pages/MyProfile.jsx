@@ -1,6 +1,7 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import Header from "../components/Header";
 import { useCurrentUserContext } from "../context/userContext";
 import FavoriteSpotCard from "../components/FavoriteSpotCard";
@@ -47,16 +48,14 @@ export default function MyProfile({ open, setOpen }) {
       .catch((error) => console.warn("error", error));
   }, [token]);
 
-  console.warn(favorites);
-
   return (
     <div className="w-screen">
       <Header open={open} setOpen={setOpen} />
       <div className="flex">
-        <h2 className="text-3xl mt-10 ml-20">Mon profil :</h2>
-        <button type="button" className="mt-10 ml-5">
+        <h2 className="text-3xl mt-5 ml-20">Mon profil :</h2>
+        <NavLink to="/modify-profile" type="button" className="mt-5 ml-5">
           <img src={Edit} alt="pen" />
-        </button>
+        </NavLink>
       </div>
       <div className="md:w-1/2 w-11/12 m-auto">
         <div className="flex md:flex-row flex-col mt-10 justify-between items-center">
@@ -74,12 +73,13 @@ export default function MyProfile({ open, setOpen }) {
               Nom : <span className="font-bold">{user.lastname}</span>
             </p>
             <p className="md:mt-10">
-              Localisation : <span className="font-bold">{user?.location}</span>
+              Localisation :{" "}
+              <span className="font-bold">{user?.localisation}</span>
             </p>
           </div>
         </div>
       </div>
-      <hr className="w-80 m-auto md:mt-20 mt-10" />
+      <hr className="w-80 m-auto  mt-10" />
       <div className="hidden md:block md:absolute md:bottom-0">
         <img src={PalmLeft} alt="palmier" className="h-72" />
       </div>

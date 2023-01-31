@@ -4,11 +4,25 @@ import Teahupoo from "../assets/1805114574.png";
 
 export default function FavoriteSpotCard({ favorite }) {
   const [favoriteSpot, setFavoriteSpot] = useState(true);
+  const handleDeleteFavorite = () => {
+    fetch(`http://localhost:5000/api/favorites/${favorite.id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        console.warn(result);
+        setFavoriteSpot(false);
+      })
+      .catch((error) => console.warn("error", error));
+  };
   return (
     <div className="w-80 border h-40 rounded-lg mb-4">
       <div className="flex flex-col items-center relative">
         <div className="flex items-center justify-center pt-2 ">
-          <button type="button" onClick={() => setFavoriteSpot(false)}>
+          <button type="button" onClick={handleDeleteFavorite}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"

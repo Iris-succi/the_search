@@ -24,10 +24,16 @@ router.post(
 // Route for user
 router.post("/api/users/inscription", hashPassword, userController.add);
 router.get("/api/users/bytoken", verifyToken, userController.findByToken);
+router.put("/api/users/modify/:id", userController.edit);
 router.get("/api/users/:id", userController.browse);
 
 // Route for favorite
 router.get("/api/favorites", verifyToken, favoriteController.getFavorites);
+router.delete(
+  "/api/favorites/:id",
+  verifyToken,
+  favoriteController.deleteFavorite
+);
 
 // Route for spot
 router.get("/api/spots", verifyToken, spotController.browse);
