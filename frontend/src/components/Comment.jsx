@@ -11,7 +11,11 @@ export default function Comment({ comment }) {
     <div>
       <div className="relative border-2 border-gray-200 rounded-md flex flex-col p-4">
         <div className="flex">
-          <img src="" alt="avatar" className="w-10 h-10" />
+          <img
+            src={`http://localhost:5000/api/avatar/${comment.avatar}`}
+            alt="avatar"
+            className="w-10 h-10 rounded-full"
+          />
           <div className="flex flex-col text-gray-400 md:ml-10 ml-5">
             <p className="text-gray-400 text-sm">
               Posté le : {formatDate(comment.date_creation)}

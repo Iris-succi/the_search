@@ -121,15 +121,30 @@ export default function ModifyProfile({ open, setOpen }) {
             <button type="button">
               {avatarStatus.status === 200 ? (
                 <img
-                  className="shadow rounded-full w-40 h-36 align-middle border-none hover:opacity-25 transition ease-in-out delay-50 "
+                  className="shadow rounded-full w-40 h-40 align-middle border-none hover:opacity-25 transition ease-in-out delay-50 "
                   src={`http://localhost:5000/api/avatar/${user.avatar}`}
                   alt={`avatar${user.firstname}-${user.id}`}
                 />
               ) : null}
             </button>
-            <form encType="multipart/form-data" onSubmit={hSubmit}>
-              <input type="file" name="avatar" ref={avatarRef} />
-              <button type="submit">Envoyer</button>
+            <form
+              encType="multipart/form-data"
+              onSubmit={hSubmit}
+              className="mt-5 w-52"
+            >
+              <input
+                type="file"
+                name="avatar"
+                ref={avatarRef}
+                className=" text-light-blue hover:border-light-blue background-transparent mb-5 flex flex-col"
+              />
+
+              <button
+                type="submit"
+                className="border rounded-md mr-4 text-light-blue hover:border-light-blue background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
+              >
+                Modifier
+              </button>
             </form>
           </div>
           <div className="flex md:flex-col flex-row mt-10 md:mt-0">
