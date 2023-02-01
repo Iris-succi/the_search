@@ -1,3 +1,6 @@
+/* eslint-disable prefer-const */
+/* eslint-disable one-var */
+/* eslint-disable prefer-destructuring */
 /* eslint-disable react/prop-types */
 import React from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
@@ -5,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import LeafletControlGeocoder from "./LeafletControlGeocoder";
 
 export default function MapSearch({ spots }) {
-  const position = [51.505, -0.09];
+  const position = [12.65, -8.0];
   const navigate = useNavigate();
 
   return (
