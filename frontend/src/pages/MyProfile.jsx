@@ -64,9 +64,9 @@ export default function MyProfile({ open, setOpen }) {
       <div className="md:w-1/2 w-11/12 m-auto">
         <div className="flex md:flex-row flex-col mt-10 justify-between items-center">
           <img
+            className="shadow rounded-full w-40 h-40 align-middle border-none hover:opacity-25 transition ease-in-out delay-50 "
             src={`http://localhost:5000/api/avatar/${user.avatar}`}
-            alt="avatar"
-            className="w-32 h-32 rounded-full"
+            alt={`avatar${user.firstname}-${user.id}`}
           />
           <div className="flex md:flex-col flex-row mt-10 md:mt-0">
             <p className="mr-5 md:mr-0">

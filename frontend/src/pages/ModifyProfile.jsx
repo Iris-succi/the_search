@@ -13,32 +13,16 @@ import TheSearch from "../assets/the_search_blue.png";
 export default function ModifyProfile({ open, setOpen }) {
   const { user, token, setUser } = useCurrentUserContext();
   const avatarRef = useRef(null);
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [email, setEmail] = useState("");
-  const [localisation, setLocalisation] = useState("");
+  const [firstname, setFirstname] = useState(user.firstname);
+  const [lastname, setLastname] = useState(user.lastname);
+  const [email, setEmail] = useState(user.email);
+  const [localisation, setLocalisation] = useState(user.localisation);
 
   const navigate = useNavigate();
   const notifySuccesAvatar = () =>
     toast.success("Votre photo a bien été envoyée !");
   const notifyErrorAvatar = () =>
     toast.error("Une erreur est survenue, veuillez recommencer");
-
-  /*   useEffect(() => {
-    const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
-
-    const requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-
-    fetch(`http://localhost:5000/api/users/${user.id}`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => console.warn(result))
-      .catch((error) => console.warn("error", error));
-  }, [token]); */
 
   const handleModify = (e) => {
     e.preventDefault();
@@ -51,6 +35,7 @@ export default function ModifyProfile({ open, setOpen }) {
       lastname,
       email,
       localisation,
+      id: user.id,
     });
 
     const requestOptions = {
@@ -60,7 +45,7 @@ export default function ModifyProfile({ open, setOpen }) {
       redirect: "follow",
     };
 
-    fetch(`http://localhost:5000/api/users/modify/${user.id}`, requestOptions)
+    fetch(`http://localhost:5000/api/users/modify`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setUser(result);
