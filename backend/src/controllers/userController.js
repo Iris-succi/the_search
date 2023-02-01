@@ -68,9 +68,26 @@ const edit = (req, res) => {
     });
 };
 
+const updateAvatar = (req, res) => {
+  const id = req.payload.sub;
+  const { avatar } = req;
+
+  models.user
+    .updateAvatar(id, avatar)
+    .then(([result]) => {
+      if (result.affectedRows === 0) res.sendStatus(404);
+      else res.status(202).send({ avatar });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   findByToken,
   add,
   edit,
+  updateAvatar,
 };

@@ -7,7 +7,6 @@ import { useCurrentUserContext } from "../context/userContext";
 import FavoriteSpotCard from "../components/FavoriteSpotCard";
 import Edit from "../assets/icons/edit.svg";
 import Heart from "../assets/icons/heart.svg";
-import Avatar from "../assets/iris.png";
 import PalmLeft from "../assets/palm_left.png";
 import PalmRight from "../assets/palm_right.png";
 
@@ -59,7 +58,11 @@ export default function MyProfile({ open, setOpen }) {
       </div>
       <div className="md:w-1/2 w-11/12 m-auto">
         <div className="flex md:flex-row flex-col mt-10 justify-between items-center">
-          <img src={Avatar} alt="avatar" className="w-32 h-32" />
+          <img
+            src={`http://localhost:5000/api/avatar/${user.avatar}`}
+            alt="avatar"
+            className="w-32 h-32"
+          />
           <div className="flex md:flex-col flex-row mt-10 md:mt-0">
             <p className="mr-5 md:mr-0">
               Prénom : <span className="font-bold">{user.firstname}</span>

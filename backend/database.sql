@@ -11,7 +11,7 @@ CREATE TABLE user (
   date_creation DATETIME NOT NULL DEFAULT NOW() 
 );
 
-INSERT INTO user (firstname, lastname, email, localisation, avatar, hashedPassword, date_creation) VALUES ('Iris', 'Succi', 'iris@gmail.com', 'Cannes', 'iris.jpg', '$argon2id$v=19$m=65536,t=5,p=1$cHKCeWcTAbFAoQip2FBoSQ$YEwzjtbjy/r88czZmo+Ess3AGPYvhonN2HTureWf3NY', '2019-01-01 00:00:00'),('Madeline', 'Thomas', 'madeline@gmail.com', 'Los Angeles', 'madeline.jpg', '$argon2id$v=19$m=65536,t=5,p=1$cHKCeWcTAbFAoQip2FBoSQ$YEwzjtbjy/r88czZmo+Ess3AGPYvhonN2HTureWf3NY','2019-01-01 00:00:00');
+INSERT INTO user (firstname, lastname, email, localisation, avatar, hashedPassword, date_creation) VALUES ('Iris', 'Succi', 'iris@gmail.com', 'Cannes', 'iris.png', '$argon2id$v=19$m=65536,t=5,p=1$cHKCeWcTAbFAoQip2FBoSQ$YEwzjtbjy/r88czZmo+Ess3AGPYvhonN2HTureWf3NY', '2019-01-01 00:00:00'),('Madeline', 'Thomas', 'madeline@gmail.com', 'Los Angeles', 'madeline.jpg', '$argon2id$v=19$m=65536,t=5,p=1$cHKCeWcTAbFAoQip2FBoSQ$YEwzjtbjy/r88czZmo+Ess3AGPYvhonN2HTureWf3NY','2019-01-01 00:00:00');
 
 DROP TABLE IF EXISTS spot;
 

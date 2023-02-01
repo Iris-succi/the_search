@@ -1,22 +1,29 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";
+import { toast, Toaster } from "react-hot-toast";
 import { useCurrentUserContext } from "../context/userContext";
-import Avatar from "../assets/iris.png";
+import Header from "../components/Header";
 import PalmLeft from "../assets/palm_left.png";
 import PalmRight from "../assets/palm_right.png";
 import TheSearch from "../assets/the_search_blue.png";
 
 export default function ModifyProfile({ open, setOpen }) {
   const { user, token, setUser } = useCurrentUserContext();
+  const avatarRef = useRef(null);
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [localisation, setLocalisation] = useState("");
+  const [avatarStatus, setAvatarStatus] = useState("");
+
   const navigate = useNavigate();
+  const notifySuccesAvatar = () =>
+    toast.success("Votre photo a bien été envoyée !");
+  const notifyErrorAvatar = () =>
+    toast.error("Une erreur est survenue, veuillez recommencer");
 
   useEffect(() => {
     const myHeaders = new Headers();
@@ -63,17 +70,68 @@ export default function ModifyProfile({ open, setOpen }) {
       .catch((error) => console.warn("error", error));
   };
 
+  function hSubmit(evt) {
+    evt.preventDefault();
+
+    if (avatarRef.current.files[0]) {
+      // recupération des articles.
+      const myHeader = new Headers();
+      myHeader.append("Authorization", `Bearer ${token}`);
+
+      const formData = new FormData();
+      formData.append("avatar", avatarRef.current.files[0]);
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeader,
+        body: formData,
+      };
+
+      fetch(`http://localhost:5000/api/avatar`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          setUser({ ...user, avatar: result.avatar });
+          notifySuccesAvatar();
+        })
+        .catch((error) => {
+          notifyErrorAvatar();
+          console.error(error);
+        });
+    } else {
+      notifyErrorAvatar();
+    }
+  }
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/api/avatar/${user?.avatar}`)
+      .then((response) => setAvatarStatus(response))
+      .catch((error) => console.warn(error));
+  }, [user]);
+
   return (
     <div className="w-screen">
+      <Toaster position="top-center" reverseOrder={false} />
       <Header open={open} setOpen={setOpen} />
       <div className="flex">
         <h2 className="text-3xl mt-20 ml-20">Modifier mon profil :</h2>
       </div>
       <div className="md:w-1/2 w-11/12 m-auto items-center">
         <form className="flex md:flex-row flex-col mt-10 justify-between items-center">
-          <button type="button">
-            <img src={Avatar} alt="avatar" className="w-32 h-32" />
-          </button>
+          <div>
+            <button type="button">
+              {avatarStatus.status === 200 ? (
+                <img
+                  className="shadow rounded-full w-40 h-36 align-middle border-none hover:opacity-25 transition ease-in-out delay-50 "
+                  src={`http://localhost:5000/api/avatar/${user.avatar}`}
+                  alt={`avatar${user.firstname}-${user.id}`}
+                />
+              ) : null}
+            </button>
+            <form encType="multipart/form-data" onSubmit={hSubmit}>
+              <input type="file" name="avatar" ref={avatarRef} />
+              <button type="submit">Envoyer</button>
+            </form>
+          </div>
           <div className="flex md:flex-col flex-row mt-10 md:mt-0">
             <div className="pt-5">
               <label>Prénom :</label>

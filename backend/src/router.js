@@ -1,10 +1,13 @@
 const express = require("express");
-
+const multer = require("multer");
+// On définit la destination de stockage de nos fichiers
+const upload = multer({ dest: process.env.UPLOAD_DIR });
 const router = express.Router();
 
 const userController = require("./controllers/userController");
 const authController = require("./controllers/authController");
 const commentController = require("./controllers/commentController");
+const fileController = require("./controllers/fileController");
 const favoriteController = require("./controllers/favoriteController");
 const spotController = require("./controllers/spotController");
 const {
@@ -46,5 +49,15 @@ router.post(
   verifyToken,
   commentController.addComment
 );
+
+// Routes for update avatar
+router.post(
+  "/api/avatar",
+  verifyToken,
+  upload.single("avatar"),
+  fileController.renameAvatar,
+  userController.updateAvatar
+);
+router.get("/api/avatar/:fileName", fileController.sendAvatar);
 
 module.exports = router;
