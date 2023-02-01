@@ -12,13 +12,23 @@ const getFavorites = (req, res) => {
     });
 };
 
-/* const addFavorite = (req, res) => {
-  const favorite = req.body;
+const deleteFavorite = (req, res) => {
+  models.favorite
+    .delete(req.payload.sub, req.params.id)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
 
+const addFavorite = (req, res) => {
+  const favorite = req.body;
   models.favorite
     .insert(favorite)
-    .then(([result]) => {
-      res.location(`/api/user/${result.insertId}`);
+    .then(() => {
       res.sendStatus(201);
     })
     .catch((err) => {
@@ -26,7 +36,9 @@ const getFavorites = (req, res) => {
       res.sendStatus(500);
     });
 };
- */
+
 module.exports = {
   getFavorites,
+  deleteFavorite,
+  addFavorite,
 };

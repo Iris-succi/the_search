@@ -12,10 +12,10 @@ class UserManager extends AbstractManager {
     );
   }
 
-  update(item) {
+  update(user) {
     return this.connection.query(
-      `update ${this.table} set title = ? where id = ?`,
-      [item.title, item.id]
+      `update ${this.table} set firstname = ?, lastname = ?, email = ?, localisation = ?  where id = ?`,
+      [user.firstname, user.lastname, user.email, user.localisation, user.id]
     );
   }
 
@@ -30,6 +30,13 @@ class UserManager extends AbstractManager {
     return this.connection.query(`select * from ${this.table} where id = ?`, [
       id,
     ]);
+  }
+
+  updateAvatar(id, avatar) {
+    return this.connection.query(
+      `update ${this.table} set avatar = ? where id = ?`,
+      [avatar, id]
+    );
   }
 }
 

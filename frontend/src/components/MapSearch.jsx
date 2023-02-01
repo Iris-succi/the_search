@@ -24,7 +24,7 @@ export default function MapSearch({ spots }) {
                   type="button"
                   onClick={() => navigate(`/spots/${spot.id}`)}
                 >
-                  {spot.name} {spot.country}
+                  🌊 {spot.name} {spot.country}
                 </button>
               </Popup>
             </Marker>

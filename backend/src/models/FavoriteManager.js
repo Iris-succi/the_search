@@ -20,6 +20,13 @@ class FavoriteManager extends AbstractManager {
       [idUser]
     );
   }
+
+  delete(idUser, idSpot) {
+    return this.connection.query(
+      `delete from ${this.table} where user_id = ? and spot_id = ?`,
+      [idUser, idSpot]
+    );
+  }
 }
 
 module.exports = FavoriteManager;

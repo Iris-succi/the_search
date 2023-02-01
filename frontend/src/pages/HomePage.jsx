@@ -26,11 +26,19 @@ export default function HomePage() {
           <img src={Waves} alt="Waves" className="pt-10 w-44" />
         </div>
         <div className="flex items-center justify-center pt-20">
-          <button type="button" onClick={() => setShowModalConnexion(true)}>
-            Connexion |{" "}
+          <button
+            type="button"
+            className="border rounded-md mr-4 text-light-blue hover:border-light-blue background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
+            onClick={() => setShowModalConnexion(true)}
+          >
+            Connexion{" "}
           </button>
-          <button type="button" onClick={() => setShowModalInscription(true)}>
-            | Inscription
+          <button
+            type="button"
+            className="border rounded-md mr-4 text-light-blue hover:border-light-blue background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
+            onClick={() => setShowModalInscription(true)}
+          >
+            Inscription
           </button>
         </div>
         <ModalConnexion

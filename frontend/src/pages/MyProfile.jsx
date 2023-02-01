@@ -1,12 +1,12 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import Header from "../components/Header";
 import { useCurrentUserContext } from "../context/userContext";
 import FavoriteSpotCard from "../components/FavoriteSpotCard";
 import Edit from "../assets/icons/edit.svg";
 import Heart from "../assets/icons/heart.svg";
-import Avatar from "../assets/iris.png";
 import PalmLeft from "../assets/palm_left.png";
 import PalmRight from "../assets/palm_right.png";
 
@@ -47,20 +47,22 @@ export default function MyProfile({ open, setOpen }) {
       .catch((error) => console.warn("error", error));
   }, [token]);
 
-  console.warn(favorites);
-
   return (
-    <div className="w-screen">
+    <div className="w-screen md:h-screen">
       <Header open={open} setOpen={setOpen} />
       <div className="flex">
-        <h2 className="text-3xl mt-10 ml-20">Mon profil :</h2>
-        <button type="button" className="mt-10 ml-5">
+        <h2 className="text-3xl mt-5 ml-20">Mon profil :</h2>
+        <NavLink to="/modify-profile" type="button" className="mt-7 ml-5">
           <img src={Edit} alt="pen" />
-        </button>
+        </NavLink>
       </div>
       <div className="md:w-1/2 w-11/12 m-auto">
         <div className="flex md:flex-row flex-col mt-10 justify-between items-center">
-          <img src={Avatar} alt="avatar" className="w-32 h-32" />
+          <img
+            src={`http://localhost:5000/api/avatar/${user.avatar}`}
+            alt="avatar"
+            className="w-32 h-32"
+          />
           <div className="flex md:flex-col flex-row mt-10 md:mt-0">
             <p className="mr-5 md:mr-0">
               Prénom : <span className="font-bold">{user.firstname}</span>
@@ -74,12 +76,13 @@ export default function MyProfile({ open, setOpen }) {
               Nom : <span className="font-bold">{user.lastname}</span>
             </p>
             <p className="md:mt-10">
-              Localisation : <span className="font-bold">{user?.location}</span>
+              Localisation :{" "}
+              <span className="font-bold">{user?.localisation}</span>
             </p>
           </div>
         </div>
       </div>
-      <hr className="w-80 m-auto md:mt-20 mt-10" />
+      <hr className="w-80 m-auto  mt-10" />
       <div className="hidden md:block md:absolute md:bottom-0">
         <img src={PalmLeft} alt="palmier" className="h-72" />
       </div>
@@ -94,7 +97,7 @@ export default function MyProfile({ open, setOpen }) {
           <img src={Heart} alt="coeur" className="ml-5" />
         </div>
       </div>
-      <div className="w-8/12 m-auto flex flex-col items-center justify-center mt-10 md:grid grid-cols-2 place-items-center">
+      <div className="w-8/12 m-auto flex flex-col items-center justify-center mt-10 md:grid grid-cols-2 place-items-center md:h-80 md:overflow-y-auto">
         {favorites?.map((favorite) => (
           <button type="button" key={favorite.id}>
             <FavoriteSpotCard favorite={favorite} />
