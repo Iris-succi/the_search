@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/prop-types */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 import { useCurrentUserContext } from "../context/userContext";
@@ -13,33 +13,16 @@ import TheSearch from "../assets/the_search_blue.png";
 export default function ModifyProfile({ open, setOpen }) {
   const { user, token, setUser } = useCurrentUserContext();
   const avatarRef = useRef(null);
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [email, setEmail] = useState("");
-  const [localisation, setLocalisation] = useState("");
-  const [avatarStatus, setAvatarStatus] = useState("");
+  const [firstname, setFirstname] = useState(user.firstname);
+  const [lastname, setLastname] = useState(user.lastname);
+  const [email, setEmail] = useState(user.email);
+  const [localisation, setLocalisation] = useState(user.localisation);
 
   const navigate = useNavigate();
   const notifySuccesAvatar = () =>
     toast.success("Votre photo a bien été envoyée !");
   const notifyErrorAvatar = () =>
     toast.error("Une erreur est survenue, veuillez recommencer");
-
-  useEffect(() => {
-    const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
-
-    const requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-
-    fetch(`http://localhost:5000/api/users/${user.id}`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => console.warn(result))
-      .catch((error) => console.warn("error", error));
-  }, [token]);
 
   const handleModify = (e) => {
     e.preventDefault();
@@ -52,6 +35,7 @@ export default function ModifyProfile({ open, setOpen }) {
       lastname,
       email,
       localisation,
+      id: user.id,
     });
 
     const requestOptions = {
@@ -61,7 +45,7 @@ export default function ModifyProfile({ open, setOpen }) {
       redirect: "follow",
     };
 
-    fetch(`http://localhost:5000/api/users/modify/${user.id}`, requestOptions)
+    fetch(`http://localhost:5000/api/users/modify`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setUser(result);
@@ -70,7 +54,7 @@ export default function ModifyProfile({ open, setOpen }) {
       .catch((error) => console.warn("error", error));
   };
 
-  function hSubmit(evt) {
+  const hSubmit = (evt) => {
     evt.preventDefault();
 
     if (avatarRef.current.files[0]) {
@@ -85,10 +69,13 @@ export default function ModifyProfile({ open, setOpen }) {
         method: "POST",
         headers: myHeader,
         body: formData,
+        redirect: "follow",
       };
 
       fetch(`http://localhost:5000/api/avatar`, requestOptions)
-        .then((response) => response.json())
+        .then((response) => {
+          return response.json();
+        })
         .then((result) => {
           setUser({ ...user, avatar: result.avatar });
           notifySuccesAvatar();
@@ -100,13 +87,7 @@ export default function ModifyProfile({ open, setOpen }) {
     } else {
       notifyErrorAvatar();
     }
-  }
-
-  useEffect(() => {
-    fetch(`http://localhost:5000/api/avatar/${user?.avatar}`)
-      .then((response) => setAvatarStatus(response))
-      .catch((error) => console.warn(error));
-  }, [user]);
+  };
 
   return (
     <div className="w-screen">
@@ -119,7 +100,7 @@ export default function ModifyProfile({ open, setOpen }) {
         <form className="flex md:flex-row flex-col mt-10 justify-between items-center">
           <div>
             <button type="button">
-              {avatarStatus.status === 200 ? (
+              {user.avatar ? (
                 <img
                   className="shadow rounded-full w-40 h-40 align-middle border-none hover:opacity-25 transition ease-in-out delay-50 "
                   src={`http://localhost:5000/api/avatar/${user.avatar}`}
@@ -127,25 +108,6 @@ export default function ModifyProfile({ open, setOpen }) {
                 />
               ) : null}
             </button>
-            <form
-              encType="multipart/form-data"
-              onSubmit={hSubmit}
-              className="mt-5 w-52"
-            >
-              <input
-                type="file"
-                name="avatar"
-                ref={avatarRef}
-                className=" text-light-blue hover:border-light-blue background-transparent mb-5 flex flex-col"
-              />
-
-              <button
-                type="submit"
-                className="border rounded-md mr-4 text-light-blue hover:border-light-blue background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
-              >
-                Modifier
-              </button>
-            </form>
           </div>
           <div className="flex md:flex-col flex-row mt-10 md:mt-0">
             <div className="pt-5">
@@ -199,6 +161,25 @@ export default function ModifyProfile({ open, setOpen }) {
               />
             </div>
           </div>
+        </form>
+        <form
+          encType="multipart/form-data"
+          onSubmit={hSubmit}
+          className="pt-5 w-52"
+        >
+          <input
+            type="file"
+            name="avatar"
+            ref={avatarRef}
+            className=" text-light-blue hover:border-light-blue background-transparent mb-5 flex flex-col"
+          />
+
+          <button
+            type="submit"
+            className="border rounded-md mr-4 text-light-blue hover:border-light-blue background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
+          >
+            Modifier
+          </button>
         </form>
         <div className="flex items-end justify-end">
           <button
