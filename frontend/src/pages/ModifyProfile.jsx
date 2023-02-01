@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/prop-types */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 import { useCurrentUserContext } from "../context/userContext";
@@ -17,7 +17,6 @@ export default function ModifyProfile({ open, setOpen }) {
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [localisation, setLocalisation] = useState("");
-  const [avatarStatus, setAvatarStatus] = useState("");
 
   const navigate = useNavigate();
   const notifySuccesAvatar = () =>
@@ -90,10 +89,10 @@ export default function ModifyProfile({ open, setOpen }) {
 
       fetch(`http://localhost:5000/api/avatar`, requestOptions)
         .then((response) => {
-          response.json();
+          return response.json();
         })
         .then((result) => {
-          setUser({ ...user, avatar: result });
+          setUser({ ...user, avatar: result.avatar });
           notifySuccesAvatar();
         })
         .catch((error) => {
@@ -104,12 +103,6 @@ export default function ModifyProfile({ open, setOpen }) {
       notifyErrorAvatar();
     }
   };
-
-  useEffect(() => {
-    fetch(`http://localhost:5000/api/avatar/${user.avatar}`)
-      .then((response) => setAvatarStatus(response))
-      .catch((error) => console.warn(error));
-  }, [user]);
 
   return (
     <div className="w-screen">
@@ -122,7 +115,7 @@ export default function ModifyProfile({ open, setOpen }) {
         <form className="flex md:flex-row flex-col mt-10 justify-between items-center">
           <div>
             <button type="button">
-              {avatarStatus.status === 200 ? (
+              {user.avatar ? (
                 <img
                   className="shadow rounded-full w-40 h-40 align-middle border-none hover:opacity-25 transition ease-in-out delay-50 "
                   src={`http://localhost:5000/api/avatar/${user.avatar}`}
