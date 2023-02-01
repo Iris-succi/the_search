@@ -1,9 +1,13 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 
-export default function FavoriteSpotCard({ favorite }) {
-  const [favoriteSpot, setFavoriteSpot] = useState(true);
+export default function FavoriteSpotCard({
+  favorite,
+  setFavoriteSpot,
+  favoriteSpot,
+  toggleFavoriteSpot,
+}) {
   const handleDeleteFavorite = () => {
     fetch(`http://localhost:5000/api/favorites/${favorite.id}`, {
       method: "DELETE",
@@ -12,9 +16,9 @@ export default function FavoriteSpotCard({ favorite }) {
       },
     })
       .then((response) => response.json())
-      .then((result) => {
-        console.warn(result);
+      .then(() => {
         setFavoriteSpot(false);
+        toggleFavoriteSpot();
       })
       .catch((error) => console.warn("error", error));
   };

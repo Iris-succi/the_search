@@ -12,23 +12,9 @@ import PalmRight from "../assets/palm_right.png";
 
 export default function MyProfile({ open, setOpen }) {
   const { user, token } = useCurrentUserContext();
-  const [favorites, setFavorites] = useState();
-
-  useEffect(() => {
-    const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
-
-    const requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-
-    fetch(`http://localhost:5000/api/users/${user.id}`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => console.warn(result))
-      .catch((error) => console.warn("error", error));
-  }, [token]);
+  const [favorites, setFavorites] = useState([]);
+  const [favoriteSpot, setFavoriteSpot] = useState(true);
+  const toggleFavoriteSpot = () => setFavoriteSpot(!favoriteSpot);
 
   useEffect(() => {
     const myHeaders = new Headers();
@@ -44,13 +30,7 @@ export default function MyProfile({ open, setOpen }) {
       .then((response) => response.json())
       .then((result) => setFavorites(result))
       .catch((error) => console.warn("error", error));
-  }, [token]);
-
-  useEffect(() => {
-    fetch(`http://localhost:5000/api/avatar/${user?.avatar}`)
-      .then((response) => console.warn(response))
-      .catch((error) => console.warn(error));
-  }, [user]);
+  }, [toggleFavoriteSpot]);
 
   return (
     <div className="w-screen md:h-screen">
@@ -105,7 +85,12 @@ export default function MyProfile({ open, setOpen }) {
       <div className="w-8/12 m-auto flex flex-col items-center justify-center mt-10 md:grid grid-cols-2 place-items-center md:h-80 md:overflow-y-auto">
         {favorites?.map((favorite) => (
           <button type="button" key={favorite.id}>
-            <FavoriteSpotCard favorite={favorite} />
+            <FavoriteSpotCard
+              favorite={favorite}
+              favoriteSpot={favoriteSpot}
+              setFavoriteSpot={setFavoriteSpot}
+              toggleFavoriteSpot={toggleFavoriteSpot}
+            />
           </button>
         ))}
       </div>
