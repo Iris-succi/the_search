@@ -25,7 +25,7 @@ export default function ModifyProfile({ open, setOpen }) {
   const notifyErrorAvatar = () =>
     toast.error("Une erreur est survenue, veuillez recommencer");
 
-  useEffect(() => {
+  /*   useEffect(() => {
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
 
@@ -39,7 +39,7 @@ export default function ModifyProfile({ open, setOpen }) {
       .then((response) => response.json())
       .then((result) => console.warn(result))
       .catch((error) => console.warn("error", error));
-  }, [token]);
+  }, [token]); */
 
   const handleModify = (e) => {
     e.preventDefault();
@@ -70,7 +70,7 @@ export default function ModifyProfile({ open, setOpen }) {
       .catch((error) => console.warn("error", error));
   };
 
-  function hSubmit(evt) {
+  const hSubmit = (evt) => {
     evt.preventDefault();
 
     if (avatarRef.current.files[0]) {
@@ -85,12 +85,15 @@ export default function ModifyProfile({ open, setOpen }) {
         method: "POST",
         headers: myHeader,
         body: formData,
+        redirect: "follow",
       };
 
       fetch(`http://localhost:5000/api/avatar`, requestOptions)
-        .then((response) => response.json())
+        .then((response) => {
+          response.json();
+        })
         .then((result) => {
-          setUser({ ...user, avatar: result.avatar });
+          setUser({ ...user, avatar: result });
           notifySuccesAvatar();
         })
         .catch((error) => {
@@ -100,10 +103,10 @@ export default function ModifyProfile({ open, setOpen }) {
     } else {
       notifyErrorAvatar();
     }
-  }
+  };
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/avatar/${user?.avatar}`)
+    fetch(`http://localhost:5000/api/avatar/${user.avatar}`)
       .then((response) => setAvatarStatus(response))
       .catch((error) => console.warn(error));
   }, [user]);
@@ -127,25 +130,6 @@ export default function ModifyProfile({ open, setOpen }) {
                 />
               ) : null}
             </button>
-            <form
-              encType="multipart/form-data"
-              onSubmit={hSubmit}
-              className="mt-5 w-52"
-            >
-              <input
-                type="file"
-                name="avatar"
-                ref={avatarRef}
-                className=" text-light-blue hover:border-light-blue background-transparent mb-5 flex flex-col"
-              />
-
-              <button
-                type="submit"
-                className="border rounded-md mr-4 text-light-blue hover:border-light-blue background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
-              >
-                Modifier
-              </button>
-            </form>
           </div>
           <div className="flex md:flex-col flex-row mt-10 md:mt-0">
             <div className="pt-5">
@@ -199,6 +183,25 @@ export default function ModifyProfile({ open, setOpen }) {
               />
             </div>
           </div>
+        </form>
+        <form
+          encType="multipart/form-data"
+          onSubmit={hSubmit}
+          className="pt-5 w-52"
+        >
+          <input
+            type="file"
+            name="avatar"
+            ref={avatarRef}
+            className=" text-light-blue hover:border-light-blue background-transparent mb-5 flex flex-col"
+          />
+
+          <button
+            type="submit"
+            className="border rounded-md mr-4 text-light-blue hover:border-light-blue background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
+          >
+            Modifier
+          </button>
         </form>
         <div className="flex items-end justify-end">
           <button

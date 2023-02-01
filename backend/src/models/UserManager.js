@@ -26,12 +26,6 @@ class UserManager extends AbstractManager {
     );
   }
 
-  getById(id) {
-    return this.connection.query(`select * from ${this.table} where id = ?`, [
-      id,
-    ]);
-  }
-
   updateAvatar(id, avatar) {
     return this.connection.query(
       `update ${this.table} set avatar = ? where id = ?`,

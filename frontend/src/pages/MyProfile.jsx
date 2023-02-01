@@ -13,7 +13,6 @@ import PalmRight from "../assets/palm_right.png";
 export default function MyProfile({ open, setOpen }) {
   const { user, token } = useCurrentUserContext();
   const [favorites, setFavorites] = useState();
-  console.warn(user);
 
   useEffect(() => {
     const myHeaders = new Headers();
@@ -47,6 +46,12 @@ export default function MyProfile({ open, setOpen }) {
       .catch((error) => console.warn("error", error));
   }, [token]);
 
+  useEffect(() => {
+    fetch(`http://localhost:5000/api/avatar/${user?.avatar}`)
+      .then((response) => console.warn(response))
+      .catch((error) => console.warn(error));
+  }, [user]);
+
   return (
     <div className="w-screen md:h-screen">
       <Header open={open} setOpen={setOpen} />
@@ -61,7 +66,7 @@ export default function MyProfile({ open, setOpen }) {
           <img
             src={`http://localhost:5000/api/avatar/${user.avatar}`}
             alt="avatar"
-            className="w-32 h-32"
+            className="w-32 h-32 rounded-full"
           />
           <div className="flex md:flex-col flex-row mt-10 md:mt-0">
             <p className="mr-5 md:mr-0">

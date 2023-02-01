@@ -2,7 +2,7 @@ const models = require("../models");
 
 const browse = (req, res) => {
   models.user
-    .getById(req.params.id)
+    .find(req.params.id)
     .then(([rows]) => {
       if (rows[0] == null) {
         res.sendStatus(404);
@@ -17,8 +17,9 @@ const browse = (req, res) => {
 };
 
 const findByToken = (req, res) => {
+  const id = req.payload.sub;
   models.user
-    .getById(req.payload.sub)
+    .find(id)
     .then(([rows]) => {
       if (rows[0] == null) {
         res.sendStatus(404);
