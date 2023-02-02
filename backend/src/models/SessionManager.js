@@ -12,7 +12,7 @@ class SessionManager extends AbstractManager {
     );
   }
 
-  add(session) {
+  add(session, picture) {
     return this.connection.query(
       `INSERT INTO ${this.table} (user_id, name_spot, board, conditions, date, content, picture) VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [
@@ -22,7 +22,7 @@ class SessionManager extends AbstractManager {
         session.conditions,
         session.date,
         session.content,
-        session.picture,
+        picture,
       ]
     );
   }

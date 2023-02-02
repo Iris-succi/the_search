@@ -3,6 +3,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useRef, useState } from "react";
 import DatePicker from "react-datepicker";
+import { toast, Toaster } from "react-hot-toast";
 import { useCurrentUserContext } from "../context/userContext";
 import "react-datepicker/dist/react-datepicker.css";
 import Header from "../components/Header";
@@ -17,6 +18,10 @@ export default function AddSession({ open, setOpen }) {
   const [conditions, setConditions] = useState("");
   const pictureRef = useRef(null);
   const [content, setContent] = useState("");
+  const notifySuccesAvatar = () =>
+    toast.success("Votre session a bien été envoyée !");
+  const notifyErrorAvatar = () =>
+    toast.error("Une erreur est survenue, veuillez recommencer");
 
   const dateConvertedToSqlFormat = (date) => {
     const dateConverted = new Date(date);
@@ -56,14 +61,20 @@ export default function AddSession({ open, setOpen }) {
       };
 
       fetch("http://localhost:5000/api/session", requestOptions)
-        .then((response) => response.json())
-        .then((results) => console.warn(results))
-        .catch((error) => console.warn("error", error));
+        .then((results) => {
+          console.warn(results);
+          notifySuccesAvatar();
+        })
+        .catch((error) => {
+          console.error(error);
+          notifyErrorAvatar();
+        });
     }
   };
 
   return (
     <div>
+      <Toaster position="top-center" reverseOrder={false} />
       <Header open={open} setOpen={setOpen} />
       <h2 className="text-3xl mt-10 ml-20">Ajoute ta session :</h2>
       <div className="md:w-1/2 w-11/12 m-auto items-center">

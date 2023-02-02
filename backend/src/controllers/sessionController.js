@@ -27,12 +27,13 @@ const getSession = (req, res) => {
 
 const addSession = (req, res) => {
   const session = JSON.parse(req.body.session);
+  const { picture } = req;
 
   models.session
-    .add(session)
+    .add(session, picture)
     .then((result) => {
       res.location(`/api/session/${result.insertId}`);
-      res.sendStatus(201);
+      res.sendStatus(200);
     })
     .catch((err) => {
       console.error(err);
