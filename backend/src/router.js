@@ -10,6 +10,7 @@ const authController = require("./controllers/authController");
 const commentController = require("./controllers/commentController");
 const fileController = require("./controllers/fileController");
 const favoriteController = require("./controllers/favoriteController");
+const sessionController = require("./controllers/sessionController");
 const spotController = require("./controllers/spotController");
 const {
   hashPassword,
@@ -69,4 +70,9 @@ router.post(
 );
 router.get("/api/avatar/:fileName", fileController.sendAvatar);
 
+// Route for session
+router.get("/api/sessions", verifyToken, sessionController.getSessions);
+router.post("/api/session", verifyToken, sessionController.addSession);
+router.get("/api/sessions/:fileName", fileController.sendPicture);
+router.get("/api/session/:id", verifyToken, sessionController.getSession);
 module.exports = router;
