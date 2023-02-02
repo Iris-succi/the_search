@@ -61,13 +61,25 @@ export default function ModalSessionDetails({
                   </div>
                   <div className="flex flex-col">
                     <div className="p-4">
-                      Date : <span className="font-bold">{}</span>
+                      Date :{" "}
+                      <span className="font-bold">
+                        {formatDate(sessionDetails?.date)}
+                      </span>
                     </div>
-                    <div className="p-4">{sessionDetails?.conditions}</div>
+
+                    <div className="p-4 text-center">
+                      Conditions :{" "}
+                      <span className="font-bold">
+                        {sessionDetails?.conditions}
+                      </span>
+                    </div>
                   </div>
                 </div>
                 <div>
-                  <div>{sessionDetails?.content}</div>
+                  <div className="text-center mb-4">
+                    Description : <br />
+                    <span className="font-bold">{sessionDetails?.content}</span>
+                  </div>
                 </div>
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
