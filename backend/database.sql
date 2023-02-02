@@ -56,7 +56,7 @@ CREATE TABLE favorite (
   FOREIGN KEY (spot_id) REFERENCES spot(id)
 );
 
-INSERT INTO favorite (user_id, spot_id) VALUES (1, 1),(1, 2),(1, 3),(1, 4),(1, 5),(1, 6),(2, 1),(2, 3),(2, 4),(2, 6);
+INSERT INTO favorite (user_id, spot_id) VALUES (1, 2),(1, 3),(1, 4),(1, 5),(1, 6),(2, 1),(2, 3),(2, 4),(2, 6);
 
 DROP TABLE IF EXISTS spot_visited;
 
@@ -67,7 +67,7 @@ CREATE TABLE spot_visited (
   FOREIGN KEY (spot_id) REFERENCES spot(id)
 );
 
-INSERT INTO spot_visited (user_id, spot_id) VALUES (1, 1),(1, 3),(1, 4),(2, 1),(2, 3),(2, 4),(2, 6);
+INSERT INTO spot_visited (user_id, spot_id) VALUES (1, 3),(1, 4),(2, 1),(2, 3),(2, 4),(2, 6);
 
 DROP TABLE IF EXISTS session;
 

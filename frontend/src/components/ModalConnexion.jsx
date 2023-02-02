@@ -38,7 +38,7 @@ export default function ModalConnexion({
         if (result.token) {
           setUser(result.user);
           localStorage.setItem("token", result.token);
-          navigate("/thesearch");
+          navigate("/myprofile");
         } else {
           notify();
         }

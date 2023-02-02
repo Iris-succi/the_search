@@ -28,9 +28,12 @@ export default function SearchPage({ open, setOpen }) {
   return (
     <div>
       <Header open={open} setOpen={setOpen} />
-      <h2 className="text-4xl font-oxygen pt-10 pb-14 text-center ">
+      <h2 className="text-4xl font-oxygen pt-10  pb-5 text-center ">
         Choisis ta destination :
       </h2>
+      <p className="text-center pb-10">
+        Trouve sur cette carte tous les meilleurs spots de la planète
+      </p>
       <div className="w-screen">
         <MapSearch spots={spots} />
       </div>
