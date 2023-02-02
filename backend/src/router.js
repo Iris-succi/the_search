@@ -2,6 +2,7 @@ const express = require("express");
 const multer = require("multer");
 // On définit la destination de stockage de nos fichiers
 const upload = multer({ dest: process.env.UPLOAD_DIR });
+const uploadPicture = multer({ dest: process.env.UPLOAD_DIR_SESSION });
 const router = express.Router();
 
 const userController = require("./controllers/userController");
@@ -75,7 +76,7 @@ router.get("/api/sessions", verifyToken, sessionController.getSessions);
 router.post(
   "/api/session",
   verifyToken,
-  upload.single("picture"),
+  uploadPicture.single("picture"),
   fileController.renamePicture,
   sessionController.addSession
 );

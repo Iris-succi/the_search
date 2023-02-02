@@ -26,7 +26,8 @@ const getSession = (req, res) => {
 };
 
 const addSession = (req, res) => {
-  const session = req.body;
+  const session = JSON.parse(req.body.session);
+
   models.session
     .add(session)
     .then((result) => {

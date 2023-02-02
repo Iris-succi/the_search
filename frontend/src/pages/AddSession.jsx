@@ -31,33 +31,35 @@ export default function AddSession({ open, setOpen }) {
 
   const hSubmit = (e) => {
     e.preventDefault();
-    const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
-    myHeaders.append("Content-Type", "application/json");
+    if (pictureRef.current.files[0]) {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${token}`);
 
-    const formData = new FormData();
-    formData.append("picture", pictureRef.current.files[0]);
+      const raw = JSON.stringify({
+        user_id: user.id,
+        name_spot: nameSpot,
+        board,
+        conditions,
+        date: dateConvertedToSqlFormat(startDate),
+        content,
+      });
 
-    const raw = JSON.stringify({
-      user_id: user.id,
-      name_spot: nameSpot,
-      board,
-      conditions,
-      date: dateConvertedToSqlFormat(startDate),
-      content,
-      picture: formData,
-    });
+      const formData = new FormData();
+      formData.append("picture", pictureRef.current.files[0]);
+      formData.append("session", raw);
 
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-    fetch("http://localhost:5000/api/session", requestOptions)
-      .then((response) => response.json())
-      .then((result) => console.warn(result))
-      .catch((error) => console.warn("error", error));
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: formData,
+        redirect: "follow",
+      };
+
+      fetch("http://localhost:5000/api/session", requestOptions)
+        .then((response) => response.json())
+        .then((results) => console.warn(results))
+        .catch((error) => console.warn("error", error));
+    }
   };
 
   return (
