@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/prop-types */
 import React from "react";
 import {
@@ -26,8 +27,8 @@ export default function MapSpotsVisited({ spotsVisited }) {
         />
         <LeafletControlGeocoder />
         <FeatureGroup>
-          {pos?.map((mark) => (
-            <Marker position={mark} />
+          {pos?.map((mark, index) => (
+            <Marker position={mark} key={index} />
           ))}
           <Polyline positions={pos} color="#00989E" />
         </FeatureGroup>

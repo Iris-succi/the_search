@@ -27,12 +27,20 @@ export default function MySessions({ open, setOpen }) {
 
     fetch(`http://localhost:5000/api/sessions`, requestOptions)
       .then((response) => response.json())
-      .then((result) => setSessions(result))
+      .then((result) => {
+        console.warn(result);
+        setSessions(result);
+      })
       .catch((error) => console.warn("error", error));
   }, []);
 
   return (
     <div className="w-screen">
+      <ModalSessionDetails
+        showModalDetails={showModalDetails}
+        setShowModalDetails={setShowModalDetails}
+        id={id}
+      />
       <Header open={open} setOpen={setOpen} />
       <div className="flex flex-col md:flex-row">
         <h1 className="text-3xl mt-5 md:ml-20 md:text-start text-center">
@@ -46,7 +54,7 @@ export default function MySessions({ open, setOpen }) {
           Ajoute ta session
         </NavLink>
       </div>
-      <div className="md:w-8/12 w-11/12 md:h-44 m-auto flex flex-col items-center justify-center mt-5 md:mt-10 md:grid md:grid-cols-2 md:place-items-center md:overflow-y-auto">
+      <div className="md:w-8/12 w-11/12 m-auto flex flex-col items-center justify-center mt-5 md:mt-10 md:grid md:grid-cols-2 place-items-center md:overflow-y-auto">
         {sessions.map((session) => (
           <button
             type="button"
@@ -59,12 +67,6 @@ export default function MySessions({ open, setOpen }) {
             <SessionCard key={session.id} session={session} />
           </button>
         ))}
-
-        <ModalSessionDetails
-          showModalDetails={showModalDetails}
-          setShowModalDetails={setShowModalDetails}
-          id={id}
-        />
       </div>
       <div className="hidden md:block md:absolute md:bottom-0">
         <img src={PalmLeft} alt="palmier" className="h-64" />

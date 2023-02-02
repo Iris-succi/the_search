@@ -3,17 +3,20 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCurrentUserContext } from "../context/userContext";
 
 export default function ModalDeconnexion({
   showModalDeconnexion,
   setShowModalDeconnexion,
   setOpen,
 }) {
+  const { setUser } = useCurrentUserContext();
   const navigate = useNavigate();
   const handleDeconnexion = () => {
     localStorage.removeItem("token");
     navigate("/");
     setOpen(false);
+    setUser({});
   };
 
   return (

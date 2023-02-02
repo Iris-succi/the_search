@@ -72,7 +72,6 @@ router.post(
 router.get("/api/avatar/:fileName", fileController.sendAvatar);
 
 // Route for session
-router.get("/api/sessions", verifyToken, sessionController.getSessions);
 router.post(
   "/api/session",
   verifyToken,
@@ -80,6 +79,7 @@ router.post(
   fileController.renamePicture,
   sessionController.addSession
 );
+router.get("/api/sessions", verifyToken, sessionController.getSessions);
 router.get("/api/sessions/:fileName", fileController.sendPicture);
 router.get("/api/session/:id", verifyToken, sessionController.getSession);
 module.exports = router;
