@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useCurrentUserContext } from "../context/userContext";
 import MapSpotsVisited from "../components/MapSpotsVisited";
 import Header from "../components/Header";
 import PalmLeft from "../assets/palm_left.png";
@@ -7,6 +8,25 @@ import PalmRight from "../assets/palm_right.png";
 import Search from "../assets/the_search_blue.png";
 
 export default function MyMapVisited({ open, setOpen }) {
+  const { token } = useCurrentUserContext();
+  const [spotsVisited, setSpotsVisited] = useState();
+
+  useEffect(() => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:5000/api/spots-visited", requestOptions)
+      .then((response) => response.json())
+      .then((data) => setSpotsVisited(data))
+      .catch((error) => console.warn(error));
+  }, [token]);
+
   return (
     <div>
       <Header open={open} setOpen={setOpen} />
@@ -14,7 +34,7 @@ export default function MyMapVisited({ open, setOpen }) {
         Mes spots visités :
       </h2>
       <div className="w-screen">
-        <MapSpotsVisited />
+        <MapSpotsVisited spotsVisited={spotsVisited} />
       </div>
       <div className="hidden md:block md:absolute md:bottom-0">
         <img src={PalmLeft} alt="palmier" className="h-64" />

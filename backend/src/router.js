@@ -5,6 +5,7 @@ const upload = multer({ dest: process.env.UPLOAD_DIR });
 const router = express.Router();
 
 const userController = require("./controllers/userController");
+const visitedController = require("./controllers/visitedController");
 const authController = require("./controllers/authController");
 const commentController = require("./controllers/commentController");
 const fileController = require("./controllers/fileController");
@@ -38,6 +39,9 @@ router.delete(
   verifyToken,
   favoriteController.deleteFavorite
 );
+
+// Route for spots visited
+router.get("/api/spots-visited", verifyToken, visitedController.getSpotVisited);
 
 // Route for spot
 router.get("/api/spots", verifyToken, spotController.browse);

@@ -1,22 +1,36 @@
+/* eslint-disable react/prop-types */
 import React from "react";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import {
+  FeatureGroup,
+  MapContainer,
+  Marker,
+  Polyline,
+  TileLayer,
+} from "react-leaflet";
 import LeafletControlGeocoder from "./LeafletControlGeocoder";
 
-export default function MapSpotsVisited() {
-  const position = [51.505, -0.09];
+export default function MapSpotsVisited({ spotsVisited }) {
+  const position = [12.65, -8.0];
+  const pos = [];
+  spotsVisited?.forEach((spot) => {
+    pos.push([spot.latitude, spot.longitude]);
+  });
+
   return (
     <div className="leaflet-container z-20">
-      <MapContainer center={position} zoom={2} scrollWheelZoom={false}>
+      <MapContainer center={position} zoom={1.5} scrollWheelZoom={false}>
+        {/* <Polyline positions={} color="blue" /> */}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <LeafletControlGeocoder />
-        <Marker position={position}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
+        <FeatureGroup>
+          {pos?.map((mark) => (
+            <Marker position={mark} />
+          ))}
+          <Polyline positions={pos} color="#00989E" />
+        </FeatureGroup>
       </MapContainer>
     </div>
   );
