@@ -29,7 +29,11 @@ export default function Header({ open, setOpen }) {
                   alt="icon surf"
                   className="w-8 h-8 white mr-5"
                 />
-                <NavLink to="/thesearch" className="text-white text-2xl">
+                <NavLink
+                  to="/thesearch"
+                  className="text-white text-2xl"
+                  onClick={() => setOpen(false)}
+                >
                   The search
                 </NavLink>
               </div>
@@ -39,13 +43,21 @@ export default function Header({ open, setOpen }) {
                   alt="icon surf"
                   className="w-8 h-8 white mr-5"
                 />
-                <NavLink to="/myprofile" className="text-white text-2xl">
+                <NavLink
+                  to="/myprofile"
+                  className="text-white text-2xl"
+                  onClick={() => setOpen(false)}
+                >
                   Mon profil
                 </NavLink>
               </div>
               <div className="flex flex-row items-center mt-10">
                 <img src={Map} alt="icon surf" className="w-8 h-8 white mr-5" />
-                <NavLink to="/myspots" className="text-white text-2xl">
+                <NavLink
+                  to="/myspots"
+                  className="text-white text-2xl"
+                  onClick={() => setOpen(false)}
+                >
                   Mes spots
                 </NavLink>
               </div>
@@ -55,7 +67,11 @@ export default function Header({ open, setOpen }) {
                   alt="icon surf"
                   className="w-8 h-8 white mr-5"
                 />
-                <NavLink to="/my-sessions" className="text-white text-2xl">
+                <NavLink
+                  to="/my-sessions"
+                  className="text-white text-2xl"
+                  onClick={() => setOpen(false)}
+                >
                   Mes sessions
                 </NavLink>
               </div>

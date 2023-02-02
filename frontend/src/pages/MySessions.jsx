@@ -32,19 +32,21 @@ export default function MySessions({ open, setOpen }) {
   }, []);
 
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen">
       <Header open={open} setOpen={setOpen} />
-      <div className="flex">
-        <h1 className="text-3xl mt-5 ml-20">Mes Sessions :</h1>
+      <div className="flex flex-col md:flex-row">
+        <h1 className="text-3xl mt-5 md:ml-20 md:text-start text-center">
+          Mes Sessions :
+        </h1>
         <NavLink
           to="/add-session"
           type="button"
-          className="border rounded-md h-10 ml-10 mt-5 text-light-blue hover:border-light-blue background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
+          className="border rounded-md md:w-62 text-center h-10 md:ml-10 mt-5 text-light-blue hover:border-light-blue background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
         >
           Ajoute ta session
         </NavLink>
       </div>
-      <div className="w-8/12 m-auto flex flex-col items-center justify-center mt-10 md:grid grid-cols-2 place-items-center md:overflow-y-auto">
+      <div className="md:w-8/12 w-11/12 md:h-44 m-auto flex flex-col items-center justify-center mt-5 md:mt-10 md:grid md:grid-cols-2 md:place-items-center md:overflow-y-auto">
         {sessions.map((session) => (
           <button
             type="button"
@@ -67,7 +69,7 @@ export default function MySessions({ open, setOpen }) {
       <div className="hidden md:block md:absolute md:bottom-0">
         <img src={PalmLeft} alt="palmier" className="h-64" />
       </div>
-      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 ">
+      <div className="hidden md:block absolute bottom-0 left-1/2 transform -translate-x-1/2 ">
         <img src={Search} alt="palmier" className="w-72" />
       </div>
       <div className="hidden  md:block md:absolute md:bottom-0 md:right-0">

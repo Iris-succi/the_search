@@ -3,6 +3,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useRef, useState } from "react";
 import DatePicker from "react-datepicker";
+import { useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 import { useCurrentUserContext } from "../context/userContext";
 import "react-datepicker/dist/react-datepicker.css";
@@ -17,6 +18,7 @@ export default function AddSession({ open, setOpen }) {
   const [board, setBoard] = useState("");
   const [conditions, setConditions] = useState("");
   const pictureRef = useRef(null);
+  const navigate = useNavigate();
   const [content, setContent] = useState("");
   const notifySuccesAvatar = () =>
     toast.success("Votre session a bien été envoyée !");
@@ -64,6 +66,7 @@ export default function AddSession({ open, setOpen }) {
         .then((results) => {
           console.warn(results);
           notifySuccesAvatar();
+          navigate("/my-sessions");
         })
         .catch((error) => {
           console.error(error);
@@ -73,7 +76,7 @@ export default function AddSession({ open, setOpen }) {
   };
 
   return (
-    <div>
+    <div className="w-screen">
       <Toaster position="top-center" reverseOrder={false} />
       <Header open={open} setOpen={setOpen} />
       <h2 className="text-3xl mt-10 ml-20">Ajoute ta session :</h2>
@@ -88,7 +91,7 @@ export default function AddSession({ open, setOpen }) {
             type="file"
             name="avatar"
             ref={pictureRef}
-            className=" text-light-blue hover:border-light-blue background-transparent mb-5 flex"
+            className=" text-light-blue hover:border-light-blue background-transparent mb-5 flex items-center"
           />
 
           <div className="flex flex-col  ml-10 justify-between items-start">
@@ -143,7 +146,7 @@ export default function AddSession({ open, setOpen }) {
             <div className="flex flex-col mt-5 ">
               <label>Description :</label>
               <textarea
-                className=" border border-gray-300 text-gray-900 text-sm rounded-lg block w-[440px] p-2.5 ml-20 mt-5"
+                className=" border border-gray-300 text-gray-900 text-sm rounded-lg block w-[220px] md:w-[440px] p-2.5 md:ml-20 mt-5"
                 onChange={(e) => setContent(e.target.value)}
                 name="Description"
                 id="Description"
@@ -151,7 +154,7 @@ export default function AddSession({ open, setOpen }) {
             </div>
             <button
               type="submit"
-              className="border rounded-md mr-4 text-light-blue hover:border-light-blue background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
+              className="border rounded-md mr-4 mt-10 text-light-blue hover:border-light-blue background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
             >
               Envoyer
             </button>
