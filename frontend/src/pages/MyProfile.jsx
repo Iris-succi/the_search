@@ -30,7 +30,7 @@ export default function MyProfile({ open, setOpen }) {
       .then((response) => response.json())
       .then((result) => setFavorites(result))
       .catch((error) => console.warn("error", error));
-  }, [token]);
+  }, [favorites]);
 
   return (
     <div className="w-screen md:h-screen">
