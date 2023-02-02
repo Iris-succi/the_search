@@ -44,28 +44,30 @@ export default function MySessions({ open, setOpen }) {
           Ajoute ta session
         </NavLink>
       </div>
-      <button
-        type="button"
-        className="flex flex-col md:flex-row mt-5 w-1/2 m-auto"
-        onClick={() => setShowModalDetails(true)}
-      >
-        {sessions.map((session) => (
-          <button
-            type="button"
-            className="flex"
-            onClick={() => {
-              setId(session.id);
-            }}
-          >
-            <SessionCard key={session.id} session={session} />
-          </button>
-        ))}
-      </button>
-      <ModalSessionDetails
-        showModalDetails={showModalDetails}
-        setShowModalDetails={setShowModalDetails}
-        id={id}
-      />
+      <div className="w-10/12">
+        <button
+          type="button"
+          className="flex flex-col md:flex-row mt-5 w-1/2 m-auto"
+          onClick={() => setShowModalDetails(true)}
+        >
+          {sessions.map((session) => (
+            <button
+              type="button"
+              className="flex"
+              onClick={() => {
+                setId(session.id);
+              }}
+            >
+              <SessionCard key={session.id} session={session} />
+            </button>
+          ))}
+        </button>
+        <ModalSessionDetails
+          showModalDetails={showModalDetails}
+          setShowModalDetails={setShowModalDetails}
+          id={id}
+        />
+      </div>
       <div className="hidden md:block md:absolute md:bottom-0">
         <img src={PalmLeft} alt="palmier" className="h-64" />
       </div>
