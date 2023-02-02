@@ -35,6 +35,7 @@ export default function ModifyProfile({ open, setOpen }) {
       lastname,
       email,
       localisation,
+      avatar: user.avatar,
       id: user.id,
     });
 
