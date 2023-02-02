@@ -30,7 +30,7 @@ export default function MyProfile({ open, setOpen }) {
       .then((response) => response.json())
       .then((result) => setFavorites(result))
       .catch((error) => console.warn("error", error));
-  }, [toggleFavoriteSpot]);
+  }, [favorites]);
 
   return (
     <div className="w-screen md:h-screen">
@@ -84,14 +84,14 @@ export default function MyProfile({ open, setOpen }) {
       </div>
       <div className="w-8/12 m-auto flex flex-col items-center justify-center mt-10 md:grid grid-cols-2 place-items-center md:h-80 md:overflow-y-auto">
         {favorites?.map((favorite) => (
-          <button type="button" key={favorite.id}>
+          <div key={favorite.id}>
             <FavoriteSpotCard
               favorite={favorite}
               favoriteSpot={favoriteSpot}
               setFavoriteSpot={setFavoriteSpot}
               toggleFavoriteSpot={toggleFavoriteSpot}
             />
-          </button>
+          </div>
         ))}
       </div>
     </div>

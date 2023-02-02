@@ -67,4 +67,21 @@ CREATE TABLE spot_visited (
   FOREIGN KEY (spot_id) REFERENCES spot(id)
 );
 
-INSERT INTO spot_visited (user_id, spot_id) VALUES (1, 1),(1, 2),(1, 3),(1, 4),(1, 5),(1, 6),(2, 1),(2, 3),(2, 4),(2, 6);
+INSERT INTO spot_visited (user_id, spot_id) VALUES (1, 1),(1, 3),(1, 4),(2, 1),(2, 3),(2, 4),(2, 6);
+
+DROP TABLE IF EXISTS session;
+
+CREATE TABLE session (
+  id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  user_id int,
+  name_spot text NOT NULL,
+  board text,
+  conditions text, 
+  date DATETIME NOT NULL,
+  content text,
+  picture text,
+  FOREIGN KEY (user_id) REFERENCES user(id)
+);
+
+INSERT INTO session (user_id, name_spot, board, conditions, date, content, picture) VALUES ('1', 'Santocha - Cap Breton', 'Firewire 6.8', '1m50 vent offshore', '2022-10-13 12:12:23', 'Session de 2h30. Pas trop de monde à 14 heure', 'santocha.jpeg'),('1', 'Thalès - Cannes', 'Firewire 6.8', '1m00 ', '2022-08-12 12:12:23', 'Session de 2h00 entre midi et deux', 'thales.jpeg');
+

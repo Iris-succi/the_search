@@ -13,6 +13,13 @@ class SpotVisited extends AbstractManager {
       [idUser]
     );
   }
+
+  addSpotVisited(spot) {
+    return this.connection.query(
+      `insert into ${this.table} (user_id, spot_id) values (?, ?)`,
+      [spot.user_id, spot.spot_id]
+    );
+  }
 }
 
 module.exports = SpotVisited;

@@ -2,6 +2,7 @@ const express = require("express");
 const multer = require("multer");
 // On définit la destination de stockage de nos fichiers
 const upload = multer({ dest: process.env.UPLOAD_DIR });
+const uploadPicture = multer({ dest: process.env.UPLOAD_DIR_SESSION });
 const router = express.Router();
 
 const userController = require("./controllers/userController");
@@ -10,6 +11,7 @@ const authController = require("./controllers/authController");
 const commentController = require("./controllers/commentController");
 const fileController = require("./controllers/fileController");
 const favoriteController = require("./controllers/favoriteController");
+const sessionController = require("./controllers/sessionController");
 const spotController = require("./controllers/spotController");
 const {
   hashPassword,
@@ -42,6 +44,11 @@ router.delete(
 
 // Route for spots visited
 router.get("/api/spots-visited", verifyToken, visitedController.getSpotVisited);
+router.post(
+  "/api/addspotvisited",
+  verifyToken,
+  visitedController.addSpotVisited
+);
 
 // Route for spot
 router.get("/api/spots", verifyToken, spotController.browse);
@@ -64,4 +71,15 @@ router.post(
 );
 router.get("/api/avatar/:fileName", fileController.sendAvatar);
 
+// Route for session
+router.post(
+  "/api/session",
+  verifyToken,
+  uploadPicture.single("picture"),
+  fileController.renamePicture,
+  sessionController.addSession
+);
+router.get("/api/sessions", verifyToken, sessionController.getSessions);
+router.get("/api/sessions/:fileName", fileController.sendPicture);
+router.get("/api/session/:id", verifyToken, sessionController.getSession);
 module.exports = router;
