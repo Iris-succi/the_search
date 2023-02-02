@@ -63,7 +63,9 @@ export default function ModalSessionDetails({
                     <div className="p-4">
                       Date :{" "}
                       <span className="font-bold">
-                        {formatDate(sessionDetails?.date)}
+                        {sessionDetails?.date
+                          ? formatDate(sessionDetails?.date)
+                          : ""}
                       </span>
                     </div>
 
