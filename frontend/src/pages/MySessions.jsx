@@ -28,7 +28,6 @@ export default function MySessions({ open, setOpen }) {
     fetch(`http://localhost:5000/api/sessions`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.warn(result);
         setSessions(result);
       })
       .catch((error) => console.warn("error", error));

@@ -27,9 +27,11 @@ export default function ModalSessionDetails({
 
     fetch(`http://localhost:5000/api/session/${id}`, requestOptions)
       .then((response) => response.json())
-      .then((result) => setSessionDetails(result[0]))
+      .then((result) => {
+        setSessionDetails(result[0]);
+      })
       .catch((error) => console.warn("error", error));
-  }, []);
+  }, [id]);
 
   console.warn(id);
   return (
