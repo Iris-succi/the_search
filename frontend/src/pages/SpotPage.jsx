@@ -79,6 +79,35 @@ export default function SpotPage({ open, setOpen }) {
       .catch((error) => console.warn("error", error));
   };
 
+  const handAddSpotVisited = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      user_id: user.id,
+      spot_id: id,
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+    toast
+      .promise(
+        fetch(`http://localhost:5000/api/addspotvisited`, requestOptions),
+        {
+          success: " 🌊 Spot ajouté aux spots visités",
+          error: "Une erreur sur le serveur est survenue lors de l'ajout",
+        }
+      )
+      .then((response) => response.json())
+      .then((result) => console.warn(result))
+      .catch((error) => console.warn("error", error));
+  };
+
   return (
     <div className="w-screen md:h-screen">
       <Toaster position="top-center" reverseOrder={false} />
@@ -105,6 +134,24 @@ export default function SpotPage({ open, setOpen }) {
                   className="ml-5"
                 >
                   <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                </svg>
+              </button>
+              <button type="button" onClick={handAddSpotVisited}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="feather feather-arrow-down-circle ml-4"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="8 12 12 16 16 12" />
+                  <line x1="12" y1="8" x2="12" y2="16" />
                 </svg>
               </button>
             </div>

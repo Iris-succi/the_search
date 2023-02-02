@@ -12,6 +12,18 @@ const getSpotVisited = (req, res) => {
     });
 };
 
+const addSpotVisited = (req, res) => {
+  const spot = req.body;
+  models.spot_visited
+    .addSpotVisited(spot)
+    .then(() => res.sendStatus(201))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   getSpotVisited,
+  addSpotVisited,
 };

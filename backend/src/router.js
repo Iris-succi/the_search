@@ -42,6 +42,11 @@ router.delete(
 
 // Route for spots visited
 router.get("/api/spots-visited", verifyToken, visitedController.getSpotVisited);
+router.post(
+  "/api/addspotvisited",
+  verifyToken,
+  visitedController.addSpotVisited
+);
 
 // Route for spot
 router.get("/api/spots", verifyToken, spotController.browse);
